@@ -2,7 +2,7 @@ package net.coeustec.util.logger;
 
 public class Logger {
 
-  public final static String LOG_TAG = "studentpal";
+  public final static String LOG_TAG = "eRC_Android";
 
   private static boolean printLog = true;
 

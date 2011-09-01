@@ -9,8 +9,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 
-public class WelcomeScreen extends Activity {
+public class WelcomeScreen extends BaseScreen {
   private Handler mHandler;
   private ClientEngine engine;
   
@@ -50,11 +51,19 @@ public class WelcomeScreen extends Activity {
   @Override
   public boolean onKeyDown(int keyCode, KeyEvent event) {
     switch (keyCode) {
-    case KeyEvent.KEYCODE_BACK: {
+    case KeyEvent.KEYCODE_BACK:
       finish();
       return true;
     }
-    }
+
     return false;
+  }
+  
+  @Override
+  public boolean onTouchEvent(MotionEvent event) {
+    mHandler.removeMessages(0);
+    mHandler.sendEmptyMessage(0);
+    
+    return super.onTouchEvent(event);
   }
 }

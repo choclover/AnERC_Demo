@@ -12,6 +12,7 @@ public abstract class Request /*extends Message*/ {
   /*
    * Constants
    */
+  public static final int RESP_TYPE_LOGIN = 1001;
   
   /*
    * Field Members
@@ -27,7 +28,7 @@ public abstract class Request /*extends Message*/ {
   public abstract void execute();
   
   public String getName() {
-    return Event.TASKNAME_Generic;
+    return "Request";  //Event.TASKNAME_Generic;
   }
   
   public boolean isIncomingReq() {
@@ -51,15 +52,15 @@ public abstract class Request /*extends Message*/ {
     this.bOutputContentReady = true;
   }
   
-  public JSONObject generateGenericReplyHeader(String cmd_type) 
-    throws JSONException {
-    JSONObject header = new JSONObject();
-    header.put(Event.TAGNAME_MSG_TYPE, Event.MESSAGE_HEADER_ACK);
-    header.put(Event.TAGNAME_MSG_ID, req_seq);
-    header.put(Event.TAGNAME_CMD_TYPE, cmd_type);
-    
-    return header;
-  }
+//  public JSONObject generateGenericReplyHeader(String cmd_type) 
+//    throws JSONException {
+//    JSONObject header = new JSONObject();
+//    header.put(Event.TAGNAME_MSG_TYPE, Event.MESSAGE_HEADER_ACK);
+//    header.put(Event.TAGNAME_MSG_ID, req_seq);
+//    header.put(Event.TAGNAME_CMD_TYPE, cmd_type);
+//    
+//    return header;
+//  }
   
   public void setRequestSeq(int seq) {
     this.req_seq = seq;

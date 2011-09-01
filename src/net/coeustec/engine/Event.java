@@ -5,26 +5,26 @@ import java.util.HashMap;
 public class Event {
   private final static String TAG = "Engine.Event";
   
-  public static final String MESSAGE_HEADER_ACK = "A";
-  public static final String MESSAGE_HEADER_REQ = "R";
-  public static final String MESSAGE_HEADER_NOTIF = "N";
+  public static final String MESSAGE_HEADER_ACK = "response";
+  public static final String MESSAGE_HEADER_REQ = "request";
+//  public static final String MESSAGE_HEADER_NOTIF = "N";
   
-  public static final String TAGNAME_MSG_TYPE = "msg_type";
-  public static final String TAGNAME_MSG_ID   = "msg_id";
-  public static final String TAGNAME_CMD_TYPE = "cmd_type";
-  public static final String TAGNAME_ERR_CODE = "err_code";
+  public static final String TAGNAME_MSG_TYPE = "operator";
+//  public static final String TAGNAME_MSG_ID   = "msg_id";
+//  public static final String TAGNAME_CMD_TYPE = "cmd_type";
+//  public static final String TAGNAME_ERR_CODE = "err_code";
   public static final String TAGNAME_RESULT    = "result";
-  public static final String TAGNAME_ARGUMENTS = "args";
+//  public static final String TAGNAME_ARGUMENTS = "args";
 
-  public static final String TAGNAME_PHONE_NUM       = "phone_no";
-  public static final String TAGNAME_APPLICATIONS    = "applications";
-  public static final String TAGNAME_APP_NAME        = "app_name";
-  public static final String TAGNAME_APP_CLASSNAME   = "app_classname";
-  public static final String TAGNAME_APP_ACCESS_TYPE = "access_type";
-  
-  public final static String TASKNAME_Generic     = "Generic";
-  public final static String TASKNAME_GetAppList  = "GetAppList";
-  public final static String TASKNAME_SetAppAccessCategory = "SetAppAccessCategory";
+//  public static final String TAGNAME_PHONE_NUM       = "phone_no";
+//  public static final String TAGNAME_APPLICATIONS    = "applications";
+//  public static final String TAGNAME_APP_NAME        = "app_name";
+//  public static final String TAGNAME_APP_CLASSNAME   = "app_classname";
+//  public static final String TAGNAME_APP_ACCESS_TYPE = "access_type";
+//  
+//  public final static String TASKNAME_Generic     = "Generic";
+//  public final static String TASKNAME_GetAppList  = "GetAppList";
+//  public final static String TASKNAME_SetAppAccessCategory = "SetAppAccessCategory";
   /* Tasks from Phone */
   public final static String TASKNAME_LOGIN   = "LOGIN";
   public final static String TASKNAME_LOGOUT  = "LOGOUT";

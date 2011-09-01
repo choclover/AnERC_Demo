@@ -5,7 +5,10 @@ import net.coeustec.engine.AppHandler;
 import net.coeustec.engine.ClientEngine;
 import net.coeustec.engine.Event;
 import net.coeustec.engine.request.Request;
+import net.coeustec.engine.request.Response;
 import net.coeustec.model.exception.STDException;
+import net.coeustec.ui.LoginScreen;
+import net.coeustec.ui.ScreenManager;
 import net.coeustec.util.logger.Logger;
 
 import android.os.Handler;
@@ -55,35 +58,23 @@ public class MessageHandler extends android.os.Handler implements AppHandler {
     case Event.SIGNAL_TYPE_REQACK:
       if (msg instanceof Request) {
         Request req = (Request)msg;
-        if (req.isIncomingReq()) {
-          //Execute this request in the main thread, 
-          //and then append the processed request to message queue again
-          req.execute();
-          this.sendRequest(req);   
-        
-        } else if (req.isOutgoingReq() && req.isOutputContentReady()) {
-          String replyStr = req.getOutputContent();
-          if (replyStr != null && replyStr.trim().length() > 0) {
-            this.ioHandler.sendMsgStr(replyStr);
-          } else {
-            Logger.d(TAG, "Outgoing reply is NULL or empty for request "+req.getName());
-          }
-          
+        // Execute this request in the main thread,
+        req.execute();
+
+        String replyStr = req.getOutputContent();
+        if (replyStr != null && replyStr.trim().length() > 0) {
+          this.ioHandler.sendMsgStr(replyStr);
         } else {
-          Logger.w(TAG, "Unhandled a request: "+req.getName());
+          Logger.d(TAG, "Outgoing reply is NULL or empty for request "
+              + req.getName());
         }
-      }
-      break;
         
-    case Event.SIGNAL_TYPE_OUTSTREAM_READY:
-      // Start to login server
-      try {
-        engine.loginServer();
-      } catch (STDException e1) {
-        Logger.w(TAG, e1.toString());
+      } else if (msg instanceof Response) {
+        handleResponseMessage((Response)msg);
       }
       break;
       
+    case Event.SIGNAL_TYPE_OUTSTREAM_READY:  
     default:
       break;
       
@@ -93,5 +84,8 @@ public class MessageHandler extends android.os.Handler implements AppHandler {
   }
 
   //////////////////////////////////////////////////////////////////////////////
+  private void handleResponseMessage(Response response) {
+    ScreenManager.getTopActivity().handleResponseMessage(response);
+  }
 
 }

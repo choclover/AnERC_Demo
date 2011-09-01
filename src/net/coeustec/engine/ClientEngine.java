@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import net.coeustec.app.ResourceManager;
+
 import net.coeustec.app.MessageHandler;
 import net.coeustec.app.io.IoHandler;
 import net.coeustec.engine.request.LoginRequest;
@@ -15,7 +17,9 @@ import net.coeustec.util.Utils;
 import net.coeustec.util.logger.Logger;
 
 import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
@@ -73,9 +77,6 @@ public class ClientEngine implements AppHandler {
     //Create IoHandler instance
     this.ioHandler =  IoHandler.getInstance();
     
-    //Create AccessController instance
-//    this.accController = AccessController.getInstance();
-    
   }
   
   //////////////////////////////////////////////////////////////////////////////
@@ -122,8 +123,6 @@ public class ClientEngine implements AppHandler {
       this.launcher.startActivity(i);
     }
   }
-  
-  
 
   public void loginServer() throws STDException {
     Logger.i(TAG, "enter loginServer");

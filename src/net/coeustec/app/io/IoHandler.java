@@ -13,15 +13,12 @@ import net.coeustec.engine.AppHandler;
 import net.coeustec.engine.ClientEngine;
 import net.coeustec.engine.Event;
 import net.coeustec.engine.request.Request;
+import net.coeustec.engine.request.Response;
 import net.coeustec.model.exception.STDException;
+import net.coeustec.util.XmlNode;
 import net.coeustec.util.logger.Logger;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-
 import android.os.Handler;
-import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 
@@ -136,13 +133,13 @@ public class IoHandler implements AppHandler {
   //////////////////////////////////////////////////////////////////////////////
   public String getRemoteSvrAddr() {
     // TODO read from config
-    String addr = "192.168.1.250";
+    String addr = "coeustec.gicp.net";
     //addr = "192.168.1.108";
     return addr;
   }
 
   public int getRemoteSvrPort() {
-    return 9177;  //9123;
+    return 9999;  //9123;
   }
 
   public String getEncoding() {
@@ -161,8 +158,16 @@ public class IoHandler implements AppHandler {
     }
   }
   
-  public void handleResponseMessage(JSONObject msgObj) {
-    //TODO
+  public void handleResponseMessage(XmlNode xmlRoot) {
+    String respType = xmlRoot.getAttribute(Event.TAGNAME_MSG_TYPE);
+    int errcode = Integer.parseInt(xmlRoot.getAttribute(Event.TAGNAME_RESULT));
+    
+    Response resp = new Response();
+    resp.setName(respType);
+    resp.setErrcode(errcode);
+    
+    Message message = this.msgHandler.obtainMessage(Event.SIGNAL_TYPE_REQACK, resp);
+    this.msgHandler.sendMessage(message);
   }
   
   private Socket constructSocketConnection() {
@@ -232,25 +237,19 @@ public class IoHandler implements AppHandler {
       Looper.loop();
     }
     
-    public void sendMsgStr(String msgStr) throws STDException {
-      if (this.outputMsgHandler == null) {
-        throw new STDException("Output Msg handler should NOT be null!");
-      }
-      Message msg = this.outputMsgHandler.obtainMessage(0, msgStr);
-      this.outputMsgHandler.sendMessage(msg);
-    }
-
     private void sendMsgStr_internal(String msg) throws STDException {
       if (bos == null) {
         throw new STDException("Output stream should NOT be null!");
       }
-
+      
+      Logger.i("sending msg str:\n"+msg);
+      
       try {
         byte[] msgBytes;
         msgBytes = msg.getBytes(getEncoding());
 
-        bos.write(msgBytes);
-        bos.flush();
+        //bos.write(msgBytes);  hemerr
+        //bos.flush();
 
       } catch (UnsupportedEncodingException e) {
         Logger.w(TAG, e.toString());
@@ -258,6 +257,16 @@ public class IoHandler implements AppHandler {
         Logger.w(TAG, e.toString());
       }
     }
+    
+    ////////////////////////////////////////////////////////////////////////////
+    public void sendMsgStr(String msgStr) throws STDException {
+      if (this.outputMsgHandler == null) {
+        throw new STDException("Output Msg handler should NOT be null!");
+      }
+      Message msg = this.outputMsgHandler.obtainMessage(0, msgStr);
+      this.outputMsgHandler.sendMessage(msg);
+    }
+    
   }//class OutputConnectionThread
   
   
@@ -265,7 +274,7 @@ public class IoHandler implements AppHandler {
     private static final String TAG = "@@ InputConnectionThread";
 
     private boolean isStop = false;
-    private boolean isReady = false;
+//    private boolean isReady = false;
     
     public void terminate() {
       isStop = true;
@@ -290,52 +299,31 @@ public class IoHandler implements AppHandler {
 
             String msgStr = new String(buffer, getEncoding());
             Logger.i(TAG, "AndrClient Got a message:\n" + msgStr);
+            if (msgStr == null || msgStr.trim().length() == 0)
+              continue;
             
             try {
-              JSONObject msgObjRoot = new JSONObject(msgStr);
-              String msgType = msgObjRoot.getString(Event.TAGNAME_MSG_TYPE);
+              XmlNode msgObjRoot = new XmlNode();
 
-              if (msgType.equals(Event.MESSAGE_HEADER_REQ)) {
+              if (!msgObjRoot.loadXml(msgStr)) {
+                Logger.w("Fail to load raw data:\n"+msgStr);
+              }
+
+              String evtType = msgObjRoot.getAttribute(Event.TAGNAME_MSG_TYPE);
+              if (evtType.equals(Event.MESSAGE_HEADER_REQ)) {
                 //This is a incoming request
-                int msgId = msgObjRoot.getInt(Event.TAGNAME_MSG_ID);
-                String reqType = msgObjRoot.getString(Event.TAGNAME_CMD_TYPE);
                 
-                String reqClazName = Request.class.getName();
-                if (reqClazName.indexOf('.') != -1) {
-                  reqClazName = reqClazName.substring(0, reqClazName.lastIndexOf('.')+1);
-                } else {
-                  reqClazName = "";
-                }
-                reqClazName = reqClazName + reqType + "Request";
-                Logger.i(TAG, "Ready to new instance of:"+reqClazName);
-                
-                Request request;
-                request = (Request) Class.forName(reqClazName).newInstance();
-
-                if (request != null) {
-                  // send incoming request to MessageHandler to handle
-                  request.setRequestSeq(msgId);
-                  msgHandler.sendRequest(request);
-                }
-                
-              } else if (msgType.equals(Event.MESSAGE_HEADER_ACK)) {
+              } else if (evtType.equals(Event.MESSAGE_HEADER_ACK)) {
                 //This is a response message
                 handleResponseMessage(msgObjRoot);
                 
               } else {
-                Logger.i(TAG, "Unsupported Incoming MESSAGE type(" + msgType
+                Logger.i(TAG, "Unsupported Incoming MESSAGE type(" + evtType
                     + ") in this version.");
               }
               
-            } catch (JSONException ex) {
-              Logger.w(TAG, "JSON paring error for request:\n" + msgStr);
+            } catch (Exception ex) {
               Logger.w(TAG, ex.toString());
-            } catch (InstantiationException ex) {
-              Logger.w(TAG, ex.toString());
-            } catch (IllegalAccessException e) {
-              Logger.w(TAG, e.toString());
-            } catch (ClassNotFoundException e) {
-              Logger.w(TAG, e.toString());
             }
           }
 

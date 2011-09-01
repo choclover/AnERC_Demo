@@ -25,18 +25,25 @@ public class LoginRequest extends Request {
   
   public void execute() {
     try {
-      JSONObject argsObj = new JSONObject();
-      argsObj.put(Event.TAGNAME_PHONE_NUM, this.phoneNum);
-      
-      JSONObject reqObj = new JSONObject();
-      reqObj.put(Event.TAGNAME_MSG_TYPE, Event.MESSAGE_HEADER_REQ);
-      reqObj.put(Event.TAGNAME_CMD_TYPE, getName());
-      reqObj.put(Event.TAGNAME_ARGUMENTS, argsObj);
+      StringBuffer reqBuff = new StringBuffer();
+      reqBuff.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
+      reqBuff.append("<erc operator=\"login\" direction=\"request\">");
+      reqBuff.append("<clienttype>2</clienttype>");
+      reqBuff.append("<clientimsi>359426002899056</clientimsi>");
+      reqBuff.append("<ercsn>434954D31107</ercsn>");
+      reqBuff.append("<clientconfig>0</clientconfig>");
+      reqBuff.append("<clientsoftware>V0.8</clientsoftware>");
+      reqBuff.append("<clientos>Android</clientos>");
+      reqBuff.append("<clientosversion>2.2.0</clientosversion>");
+      reqBuff.append("<clientpwd>12345678</clientpwd>");
+      reqBuff.append("<clientmsisdn>15365185898</clientmsisdn>");
+      reqBuff.append("</erc>");
+      reqBuff.append("\n");
       
       this.bIncoming = false;
-      setOutputContent(reqObj.toString());
+      setOutputContent(reqBuff.toString());
 
-    } catch (JSONException ex) {
+    } catch (Exception ex) {
       Logger.w(getName(), "In execute() got an error:" + ex.toString());
     }
   }
