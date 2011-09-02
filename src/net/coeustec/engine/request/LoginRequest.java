@@ -1,5 +1,6 @@
 package net.coeustec.engine.request;
 
+import net.coeustec.engine.ClientEngine;
 import net.coeustec.engine.Event;
 import net.coeustec.util.logger.Logger;
 
@@ -23,7 +24,7 @@ public class LoginRequest extends Request {
       reqBuff.append("<erc operator=\"login\" direction=\"request\">");
       reqBuff.append("<clienttype>2</clienttype>");
       reqBuff.append("<clientimsi>359426002899056</clientimsi>");
-      reqBuff.append("<ercsn>434954D31107</ercsn>");
+      reqBuff.append("<ercsn>" +ClientEngine.getInstance().getErcSN() +"</ercsn>");
       reqBuff.append("<clientconfig>0</clientconfig>");
       reqBuff.append("<clientsoftware>V0.8</clientsoftware>");
       reqBuff.append("<clientos>Android</clientos>");

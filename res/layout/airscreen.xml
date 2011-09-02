@@ -56,8 +56,8 @@
 			android:layout_marginLeft="121dp">
 		</ImageView>
 		<Button android:layout_height="wrap_content"
-			android:layout_width="wrap_content" android:text="@string/login"
-			android:id="@+id/btnLogin" android:textSize="10pt"
+			android:layout_width="wrap_content" android:text="@string/control"
+			android:id="@+id/btnControl" android:textSize="10pt"
 			android:layout_alignParentBottom="true"
 			android:layout_alignParentRight="true" android:layout_marginRight="27dp"></Button>
 	</RelativeLayout>

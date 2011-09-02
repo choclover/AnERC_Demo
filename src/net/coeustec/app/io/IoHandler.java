@@ -4,7 +4,6 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -12,12 +11,10 @@ import net.coeustec.app.MessageHandler;
 import net.coeustec.engine.AppHandler;
 import net.coeustec.engine.ClientEngine;
 import net.coeustec.engine.Event;
-import net.coeustec.engine.request.Request;
 import net.coeustec.engine.request.Response;
 import net.coeustec.model.exception.STDException;
 import net.coeustec.util.XmlNode;
 import net.coeustec.util.logger.Logger;
-
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -48,7 +45,6 @@ public class IoHandler implements AppHandler {
    * Methods
    */
   private IoHandler() {
-    
   }
   
   public static IoHandler getInstance() {
@@ -59,43 +55,20 @@ public class IoHandler implements AppHandler {
   }
 
   private void initialize() {
-    if (socketConn != null) {
-      try { socketConn.close(); } 
-      catch (IOException e) { e.printStackTrace(); }
-      socketConn = null;
-    }
-
-    while (socketConn == null) {
-      socketConn = constructSocketConnection();
-      if (socketConn == null) {
-        Logger.w(TAG, "Creating Socket returns NULL");
-        try {
-          Thread.sleep(2000);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
-      } 
-    }
-
-    if (socketConn != null) {
-      try {
-        bis = new BufferedInputStream(socketConn.getInputStream());
-        bos = new BufferedOutputStream(socketConn.getOutputStream());
-        
-        inputConnThread = new InputConnectionThread(); 
-        inputConnThread.start();
-        outputConnThread = new OutputConnectionThread(); 
-        outputConnThread.start(); 
-        
-      } catch (IOException e) {
-        e.printStackTrace();
+    Runnable r = new Runnable() {
+      @Override
+      public void run() {
+        init_network();
       }
-    }
+    };
+    new Thread(r).start();
   }
   
+  
+  @Override
   public void launch() {
     this.engine = ClientEngine.getInstance();  
-    this.msgHandler = MessageHandler.getInstance();
+    this.msgHandler = this.engine.getMsgHandler();
     
     initialize();
   }
@@ -130,11 +103,20 @@ public class IoHandler implements AppHandler {
         Logger.w(TAG, e.toString());
       }
   }
-  //////////////////////////////////////////////////////////////////////////////
-  public String getRemoteSvrAddr() {
+  
+  public String getRemoteSvrIP() {
+    /* 
+     * Do NOT use localhost/127.0.0.1 for machine itself 
+     */
+    // TODO read from config
+    String addr = "192.168.1.250";
+    //addr = "192.168.1.108";
+    return addr;
+  }
+
+  public String getRemoteSvrDomainName() {
     // TODO read from config
     String addr = "coeustec.gicp.net";
-    //addr = "221.131.143.86";
     return addr;
   }
 
@@ -160,7 +142,9 @@ public class IoHandler implements AppHandler {
   
   public void handleResponseMessage(XmlNode xmlRoot) {
     String respType = xmlRoot.getAttribute(Event.TAGNAME_MSG_TYPE);
-    String val = xmlRoot.getNodeList(nodename)(Event.TAGNAME_RESULT).;
+    
+    String val = "";
+    val = xmlRoot.selectSingleNodeText(Event.TAGNAME_RESULT);
     int errcode = Integer.parseInt(val);
     
     Response resp = new Response();
@@ -171,28 +155,77 @@ public class IoHandler implements AppHandler {
     this.msgHandler.sendMessage(message);
   }
   
+  //////////////////////////////////////////////////////////////////////////////
+  private void init_network() {
+    if (socketConn != null) {
+      try { socketConn.close(); } 
+      catch (IOException e) { e.printStackTrace(); }
+      socketConn = null;
+    }
+
+    while (socketConn == null) {
+      socketConn = constructSocketConnection();
+      if (socketConn == null) {
+        Logger.w(TAG, "Creating Socket returns NULL");
+        try {
+          Thread.sleep(2000);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+      } 
+      
+      break;  //FIXME: design a re-connect or retry method
+    }
+
+    if (socketConn != null) {
+      try {
+        bis = new BufferedInputStream(socketConn.getInputStream());
+        bos = new BufferedOutputStream(socketConn.getOutputStream());
+        
+        inputConnThread = new InputConnectionThread(); 
+        inputConnThread.start();
+        outputConnThread = new OutputConnectionThread(); 
+        outputConnThread.start(); 
+        
+      } catch (IOException e) {
+        Logger.w(TAG, e.toString());
+      }
+    }
+  }
+  
   private Socket constructSocketConnection() {
     Socket aSock = null;
-    try {
-      // The IP here should NOT be localhost which is the phone itself
-      aSock = new Socket(getRemoteSvrAddr(),
-          getRemoteSvrPort());
-      aSock.setKeepAlive(true);
-      // TODO handle re-connnect and exception handling
-
-    } catch (UnknownHostException e) {
-      Logger.w(TAG, e.toString());
-    } catch (IOException e) {
-      Logger.w(TAG, e.toString());
+    final int RETRY_TIMES = 5;
+    
+    for (int i=0; i<RETRY_TIMES; i++) {
+      try {
+        // The IP here should NOT be localhost which is the phone itself
+        aSock = new Socket(getRemoteSvrDomainName(),
+            getRemoteSvrPort());
+        aSock.setKeepAlive(true);
+  
+      } catch (UnknownHostException e) {
+        Logger.w(TAG, e.toString());
+      } catch (IOException e) {
+        Logger.w(TAG, e.toString());
+      }
+      
+      if (aSock != null) break;
+      
+      try {
+        Thread.sleep((i*10+5) * 1000);
+      } catch (InterruptedException e) {
+        Logger.w(TAG, e.toString());
+      }
     }
 
     return aSock;
   }
   
-  //////////////////////////////////////////////////////////////////////////////
+  //**************************************************************************//
   //Connection thread
   class OutputConnectionThread extends Thread/*HandlerThread*/ {
-    private static final String TAG = "OutputConnectionThread";
+    private static final String TAG = "@@ OutputConnectionThread";
     private Handler outputMsgHandler = null;
     private boolean isReady = false;
     
@@ -232,6 +265,7 @@ public class IoHandler implements AppHandler {
         }
       };
       
+      //we can start to login server now since OUTPUT stream is ready
       Message signal = msgHandler.obtainMessage(Event.SIGNAL_TYPE_OUTSTREAM_READY);
       msgHandler.sendMessage(signal);
       
@@ -242,8 +276,8 @@ public class IoHandler implements AppHandler {
       if (bos == null) {
         throw new STDException("Output stream should NOT be null!");
       }
-      
-      Logger.i("sending msg str:\n"+msg);
+
+      Logger.i("Ready to send msg:\n"+msg);
       
       try {
         byte[] msgBytes;
@@ -270,7 +304,7 @@ public class IoHandler implements AppHandler {
     
   }//class OutputConnectionThread
   
-  
+  //**************************************************************************//
   class InputConnectionThread extends Thread {
     private static final String TAG = "@@ InputConnectionThread";
 
@@ -300,8 +334,9 @@ public class IoHandler implements AppHandler {
 
             String msgStr = new String(buffer, getEncoding());
             Logger.i(TAG, "AndrClient Got a message:\n" + msgStr);
-            if (msgStr == null || msgStr.trim().length() == 0)
+            if (msgStr == null || msgStr.trim().length() == 0) {
               continue;
+			}
             
             try {
               XmlNode msgObjRoot = new XmlNode();

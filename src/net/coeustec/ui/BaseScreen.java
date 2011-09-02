@@ -20,7 +20,7 @@ public class BaseScreen extends Activity {
     builder.setTitle(title);
     builder.setMessage(msgStr);
     builder.setCancelable(false);
-    builder.setPositiveButton(ResourceManager.RES_STR_SENDREQUEST, null);
+    builder.setPositiveButton(ResourceManager.RES_STR_OK, null);
     
     AlertDialog alert = builder.create();
     alert.show();

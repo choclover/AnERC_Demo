@@ -20,14 +20,14 @@ public class MainApp extends Activity {
       engine = ClientEngine.getInstance();
       engine.initialize(this);
       engine.launch();
-      
-      Thread.sleep(2000);
     } catch (Exception e) {
       e.printStackTrace();
     }
     
     Logger.i("ready to launch welcome screen!");
     ActivityUtil.directToIntent(this, WelcomeScreen.class);
+    
+    //finish();
   }
 
 }

@@ -4,7 +4,6 @@ import net.coeustec.model.exception.STDException;
 import net.coeustec.util.logger.Logger;
 
 import net.coeustec.R;
-import net.coeustec.app.ResourceManager;
 import net.coeustec.engine.ClientEngine;
 import net.coeustec.engine.Event;
 import net.coeustec.engine.request.Response;
@@ -27,7 +26,7 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
-public class LoginScreen extends BaseScreen {
+public class AlarmScreen extends BaseScreen {
 
   protected ProgressBar pbar = null;
   protected PopupWindow popup = null;
@@ -139,8 +138,7 @@ public class LoginScreen extends BaseScreen {
       closeProgress();
       
       if (response.getErrcode() != Event.ERRCODE_NOERROR) {
-        showConfirmDialog(ResourceManager.RES_STR_LOGIN+ResourceManager.RES_STR_FAIL, 
-            "错误代码" + response.getErrcode());
+        showConfirmDialog("登录失败", "错误代码" + response.getErrcode());
       } else {
         ScreenManager.removeTopActivity();
 

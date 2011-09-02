@@ -124,6 +124,10 @@ public class ClientEngine implements AppHandler {
       this.launcher.startActivity(i);
     }
   }
+  
+  public String getErcSN() {
+    return "434954D31107";
+  }
 
   public void loginServer(String phonenum, String passwd) throws STDException {
     Logger.i(TAG, "enter loginServer with "+phonenum+ " & "+passwd);

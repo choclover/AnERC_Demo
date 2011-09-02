@@ -29,6 +29,7 @@ public class Event {
   /* Tasks from Phone */
   public final static String TASKNAME_LOGIN   = "LOGIN";
   public final static String TASKNAME_LOGOUT  = "LOGOUT";
+  public final static String TASKNAME_CONTROL  = "CONTROL";
   
   public static final int MSG_ID_INVALID = -1;
   public static final int MSG_ID_NOTUSED = 0;
