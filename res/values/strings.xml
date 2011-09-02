@@ -2,4 +2,8 @@
 <resources>
     <string name="mainapp_name">AnERC_Demo</string>
     <string name="launcher_name">Launcher</string>
+    <string name="login_title">i@HOME 智能家居</string>
+    <string name="my_phonenum">本机号码</string>
+    <string name="login_pwd">登录密码</string>
+    <string name="login">登    录</string>
 </resources>

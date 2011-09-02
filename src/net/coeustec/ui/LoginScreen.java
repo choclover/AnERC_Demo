@@ -1,5 +1,10 @@
 package net.coeustec.ui;
 
+import net.coeustec.model.exception.STDException;
+import net.coeustec.util.logger.Logger;
+
+import net.coeustec.R;
+import net.coeustec.engine.ClientEngine;
 import net.coeustec.engine.Event;
 import net.coeustec.engine.request.Response;
 import android.app.Activity;
@@ -15,6 +20,8 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -35,7 +42,7 @@ public class LoginScreen extends BaseScreen {
 
 //		setTopBarButton();
 //		setBottomBarButton();
-//		setBodyView();
+		setBodyView();
 //		initCallBack();
 
 		// 特别处理，隐藏状态条
@@ -43,16 +50,37 @@ public class LoginScreen extends BaseScreen {
 //		topbar.setVisibility(View.GONE);
 
 		addToManager(this);
+		
+		Button btnLogin = (Button) findViewById(R.id.btnLogin);
+		btnLogin.setOnClickListener(new View.OnClickListener() {
+      public void onClick(View view) {
+        Logger.i("btnLogin is clicked!");
+        try {
+          String phoneNum = ((EditText)findViewById(R.id.etPhonenum)).getText().toString().trim();
+          String passwd = ((EditText)findViewById(R.id.etPasswd)).getText().toString().trim();
+          if (phoneNum.length()==0 || passwd.length()==0)
+          {
+            showConfirmDialog("警告", "本机号码或者登录密码不能为空！");
+            
+          } else {
+            ClientEngine.getInstance().loginServer(phoneNum, passwd);
+          }
+          
+        } catch (STDException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+      }
+  });
 	}
 
-	//@Override
 	public void setBodyView() {
 //		super.setBodyView();
 //		LayoutInflater inflater = (LayoutInflater) this
 //				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 //		View view = inflater.inflate(R.layout.loginscreen, null);
-//		bodyView.addView(view, new LayoutParams(LayoutParams.FILL_PARENT,
-//				LayoutParams.FILL_PARENT));
+	  
+	  setContentView(R.layout.loginscreen);
 	}
 
 	/*

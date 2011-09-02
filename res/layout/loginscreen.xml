@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:weightSum="1" android:orientation="vertical"
+	android:background="@drawable/background">
+	<TextView android:id="@+id/textView1" android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_width="match_parent" android:gravity="center_vertical|center_horizontal"
+		android:background="@drawable/login_title" android:text="@string/login_title"
+		android:layout_height="46dp"></TextView>
+	<ImageView android:id="@+id/imageView1" android:layout_width="wrap_content"
+		android:src="@drawable/iathome_intro_320" android:layout_height="wrap_content"></ImageView>
+	<ImageView android:id="@+id/imageView2" android:src="@drawable/myhome_default"
+		android:layout_gravity="center_horizontal" android:layout_width="91dp"
+		android:layout_height="91dp" android:layout_marginBottom="15dip"></ImageView>
+
+	<RelativeLayout android:layout_height="wrap_content"
+		android:layout_width="match_parent" android:id="@+id/relativeLayout1"
+		android:layout_weight="0.41">
+		<EditText android:layout_height="wrap_content" android:id="@+id/etPhonenum"
+			android:layout_width="150dip" android:layout_centerVertical="true"
+			android:layout_alignParentRight="true" android:layout_marginRight="20dp"
+			android:inputType="phone" android:text="15365185898">
+			<requestFocus></requestFocus>
+		</EditText>
+		<TextView android:text="@string/my_phonenum"
+			android:layout_height="wrap_content" android:layout_width="wrap_content"
+			android:id="@+id/textView2" android:textAppearance="?android:attr/textAppearanceLarge"
+			android:textColor="#000000" android:layout_centerVertical="true"
+			android:layout_toLeftOf="@+id/editText1" android:layout_marginRight="28dp"></TextView>
+	</RelativeLayout>
+	<RelativeLayout android:layout_height="wrap_content"
+		android:layout_width="match_parent" android:id="@+id/relativeLayout2"
+		android:layout_weight="0.37">
+		<EditText android:layout_marginRight="20dp"
+			android:layout_height="wrap_content" android:id="@+id/etPasswd"
+			android:layout_width="150dip" android:layout_centerVertical="true"
+			android:layout_alignParentRight="true" android:inputType="textPassword" android:text="12345678">
+		</EditText>
+		<TextView android:text="@string/login_pwd"
+			android:layout_marginRight="28dp" android:layout_height="wrap_content"
+			android:layout_width="wrap_content" android:layout_centerVertical="true"
+			android:layout_toLeftOf="@+id/EditText01" android:id="@+id/TextView01"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:textColor="#000000"></TextView>
+	</RelativeLayout>
+	<RelativeLayout android:layout_width="match_parent"
+		android:id="@+id/relativeLayout3" android:layout_height="53dp">
+		<ImageView android:layout_height="wrap_content" android:id="@+id/imageView03"
+			android:layout_width="wrap_content" android:src="@drawable/attention"
+			android:layout_centerVertical="true" android:layout_alignParentLeft="true"
+			android:layout_marginLeft="44dp"></ImageView>
+		<ImageView android:layout_height="wrap_content" android:id="@+id/ImageView01"
+			android:layout_width="wrap_content" android:src="@drawable/about"
+			android:layout_centerVertical="true" android:layout_alignParentLeft="true"
+			android:layout_marginLeft="121dp">
+		</ImageView>
+		<Button android:layout_height="wrap_content"
+			android:layout_width="wrap_content" android:text="@string/login"
+			android:id="@+id/btnLogin" android:textSize="10pt"
+			android:layout_alignParentBottom="true"
+			android:layout_alignParentRight="true" android:layout_marginRight="27dp"></Button>
+	</RelativeLayout>
+
+</LinearLayout>
+			
+			

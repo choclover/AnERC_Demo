@@ -1,22 +1,15 @@
 package net.coeustec.engine.request;
 
-import java.util.List;
-
-import net.coeustec.engine.ClientEngine;
 import net.coeustec.engine.Event;
 import net.coeustec.util.logger.Logger;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-
-
 public class LoginRequest extends Request {
   private String phoneNum = null;
+  private String passwd = null;
   
-  public LoginRequest(String phoneNum) {
+  public LoginRequest(String phoneNum, String passwd) {
     this.phoneNum  = phoneNum;
+    this.passwd = passwd;
   }
   
   public String getName() {
@@ -35,8 +28,8 @@ public class LoginRequest extends Request {
       reqBuff.append("<clientsoftware>V0.8</clientsoftware>");
       reqBuff.append("<clientos>Android</clientos>");
       reqBuff.append("<clientosversion>2.2.0</clientosversion>");
-      reqBuff.append("<clientpwd>12345678</clientpwd>");
-      reqBuff.append("<clientmsisdn>15365185898</clientmsisdn>");
+      reqBuff.append("<clientpwd>" +passwd+ "</clientpwd>");
+      reqBuff.append("<clientmsisdn>" +phoneNum+ "</clientmsisdn>");
       reqBuff.append("</erc>");
       reqBuff.append("\n");
       

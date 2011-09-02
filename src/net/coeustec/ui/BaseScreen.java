@@ -29,7 +29,7 @@ public class BaseScreen extends Activity {
   public void showQuitAppDialog() {
     AlertDialog.Builder builder = new AlertDialog.Builder(BaseScreen.this);
     builder.setTitle(ResourceManager.RES_STR_QUITAPP).setMessage(
-        ResourceManager.RES_STR_QUITAPP);
+        ResourceManager.RES_STR_QUITAPP+"?");
     builder.setPositiveButton(ResourceManager.RES_STR_OK,
         new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int whichButton) {

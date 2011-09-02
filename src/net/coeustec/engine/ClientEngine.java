@@ -88,12 +88,13 @@ public class ClientEngine implements AppHandler {
   
   @Override
   public void launch() {
+    Logger.i("enter ClientEngine.launch()!");
     this.ioHandler.launch();
     this.msgHandler.launch();
   }
   
   public String getPhoneNum() {
-    return this.teleManager.getLine1Number();
+    return "";  //this.teleManager.getLine1Number();
   }
 
   public ActivityManager getActivityManager() {
@@ -124,16 +125,16 @@ public class ClientEngine implements AppHandler {
     }
   }
 
-  public void loginServer() throws STDException {
-    Logger.i(TAG, "enter loginServer");
+  public void loginServer(String phonenum, String passwd) throws STDException {
+    Logger.i(TAG, "enter loginServer with "+phonenum+ " & "+passwd);
     
-    String phoneNum = getPhoneNum();
+    String phoneNum = phonenum;  //getPhoneNum();
     if (! Utils.isValidPhoneNumber(phoneNum)) {
       throw new STDException("Got invalid phone number of " + phoneNum
           + ", unable to login!");
     }
     
-    Request request = new LoginRequest(phoneNum);
+    Request request = new LoginRequest(phoneNum, passwd);
     msgHandler.sendRequest(request);
   }
 }

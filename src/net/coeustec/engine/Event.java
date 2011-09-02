@@ -10,6 +10,7 @@ public class Event {
 //  public static final String MESSAGE_HEADER_NOTIF = "N";
   
   public static final String TAGNAME_MSG_TYPE = "operator";
+  public static final String TAGNAME_MSG_DIRE = "direction";
 //  public static final String TAGNAME_MSG_ID   = "msg_id";
 //  public static final String TAGNAME_CMD_TYPE = "cmd_type";
 //  public static final String TAGNAME_ERR_CODE = "err_code";

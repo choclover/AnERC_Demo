@@ -134,7 +134,7 @@ public class IoHandler implements AppHandler {
   public String getRemoteSvrAddr() {
     // TODO read from config
     String addr = "coeustec.gicp.net";
-    //addr = "192.168.1.108";
+    //addr = "221.131.143.86";
     return addr;
   }
 
@@ -160,7 +160,8 @@ public class IoHandler implements AppHandler {
   
   public void handleResponseMessage(XmlNode xmlRoot) {
     String respType = xmlRoot.getAttribute(Event.TAGNAME_MSG_TYPE);
-    int errcode = Integer.parseInt(xmlRoot.getAttribute(Event.TAGNAME_RESULT));
+    String val = xmlRoot.getNodeList(nodename)(Event.TAGNAME_RESULT).;
+    int errcode = Integer.parseInt(val);
     
     Response resp = new Response();
     resp.setName(respType);
@@ -174,7 +175,7 @@ public class IoHandler implements AppHandler {
     Socket aSock = null;
     try {
       // The IP here should NOT be localhost which is the phone itself
-      aSock = new Socket(InetAddress.getByName(getRemoteSvrAddr()),
+      aSock = new Socket(getRemoteSvrAddr(),
           getRemoteSvrPort());
       aSock.setKeepAlive(true);
       // TODO handle re-connnect and exception handling
@@ -248,8 +249,8 @@ public class IoHandler implements AppHandler {
         byte[] msgBytes;
         msgBytes = msg.getBytes(getEncoding());
 
-        //bos.write(msgBytes);  hemerr
-        //bos.flush();
+        bos.write(msgBytes);  
+        bos.flush();
 
       } catch (UnsupportedEncodingException e) {
         Logger.w(TAG, e.toString());
@@ -309,7 +310,7 @@ public class IoHandler implements AppHandler {
                 Logger.w("Fail to load raw data:\n"+msgStr);
               }
 
-              String evtType = msgObjRoot.getAttribute(Event.TAGNAME_MSG_TYPE);
+              String evtType = msgObjRoot.getAttribute(Event.TAGNAME_MSG_DIRE);
               if (evtType.equals(Event.MESSAGE_HEADER_REQ)) {
                 //This is a incoming request
                 
