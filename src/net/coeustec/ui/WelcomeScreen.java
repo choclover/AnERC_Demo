@@ -24,21 +24,22 @@ public class WelcomeScreen extends BaseScreen {
     ActivityUtil.setFullscreen(this);
     setContentView(R.layout.welcome);
     
-//    mHandler = new Handler() {
-//      @Override
-//      public void handleMessage(Message msg) {
-//        Logger.i("ready to launch login screen!");
-//        ActivityUtil.directToIntent(WelcomeScreen.this, LoginScreen.class);
-//        finish();
-//        
-//        super.handleMessage(msg);
-//
-//      }
-//    };
+    mHandler = new Handler() {
+      @Override
+      public void handleMessage(Message msg) {
+        launchLogin();
+      }
+    };
     
-    //mHandler.sendMessageDelayed(Message.obtain(), 4000);
+    mHandler.sendMessageDelayed(Message.obtain(), 2500);
   }
 
+  public void launchLogin() {
+    Logger.i("ready to launch login screen!");
+    ActivityUtil.directToIntent(WelcomeScreen.this, LoginScreen.class);
+    this.finish(); 
+  }
+  
   /*
    * * 响应按键函数
    */
@@ -55,12 +56,12 @@ public class WelcomeScreen extends BaseScreen {
   
   @Override
   public boolean onTouchEvent(MotionEvent event) {
-//    mHandler.removeMessages(0);
-//    mHandler.sendEmptyMessage(0);
-    
-    Logger.i("ready to launch login screen!");
-    ActivityUtil.directToIntent(WelcomeScreen.this, LoginScreen.class);
-    this.finish();
+    if (true) {
+      mHandler.removeMessages(0);
+      mHandler.sendEmptyMessage(0);
+    } else {
+      launchLogin();
+    }
     
     return super.onTouchEvent(event);
   }

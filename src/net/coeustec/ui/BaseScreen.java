@@ -35,6 +35,7 @@ public class BaseScreen extends Activity {
     builder.setPositiveButton(ResourceManager.RES_STR_OK,
         new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int whichButton) {
+            finish();  
             ClientEngine.getInstance().exitApp();
           }
         }).setNegativeButton(ResourceManager.RES_STR_CANCEL, null);

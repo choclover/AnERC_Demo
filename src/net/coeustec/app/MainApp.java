@@ -27,7 +27,7 @@ public class MainApp extends Activity {
     Logger.i("ready to launch welcome screen!");
     ActivityUtil.directToIntent(this, WelcomeScreen.class);
     
-    //finish();
+    finish();
   }
 
 }
