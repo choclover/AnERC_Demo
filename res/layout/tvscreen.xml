@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:weightSum="1" android:orientation="vertical"
+	android:background="@drawable/background">
+	<RelativeLayout android:layout_height="40dp"
+		android:layout_width="match_parent" android:background="@drawable/login_title"
+		android:id="@+id/relativeLayout4">
+		<ImageView android:id="@+id/imageView1"
+			android:layout_height="wrap_content" android:layout_width="wrap_content"
+			android:src="@drawable/myhome_default"
+			android:layout_alignParentLeft="true" android:layout_alignParentTop="true"></ImageView>
+		<TextView android:layout_width="wrap_content" android:id="@+id/title"
+			android:text="@string/title_myhome" android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_centerVertical="true" android:layout_toRightOf="@+id/imageView1"
+			android:layout_marginLeft="15dp"></TextView>
+	</RelativeLayout>
+	<RelativeLayout android:layout_height="53dp"
+		android:layout_width="match_parent" android:id="@+id/relativeLayout3"
+		android:layout_weight="0.19">
+		<ImageView android:src="@drawable/poweroff"
+			android:layout_width="wrap_content" android:clickable="true"
+			android:focusable="false" android:id="@+id/btnPower"
+			android:layout_height="wrap_content" android:layout_centerVertical="true"
+			android:layout_alignParentLeft="true" android:layout_marginLeft="27dp"></ImageView>
+		<ImageView android:src="@drawable/unmute"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:layout_alignTop="@+id/btnPower"
+			android:layout_alignParentRight="true" android:layout_marginRight="32dp"
+			android:id="@+id/btnMute"></ImageView>
+	</RelativeLayout>
+
+	<View android:layout_width="wrap_content" android:id="@+id/view1"
+		android:layout_height="3px" android:background="@color/grey"></View>
+	<RelativeLayout android:layout_height="53dp"
+		android:id="@+id/relativeLayout1" android:layout_width="match_parent"
+		android:layout_weight="0.38">
+		<Button android:id="@+id/btnVolup" android:layout_marginLeft="23dp"
+			android:layout_alignParentTop="true" android:text="+"
+			android:layout_width="wrap_content" android:textSize="10pt"
+			android:layout_marginTop="19dp" android:layout_alignParentLeft="true"
+			android:layout_height="wrap_content"></Button>
+		<Button android:id="@+id/btnProgramup"
+			android:layout_marginLeft="23dp" android:text="+"
+			android:layout_alignBottom="@+id/btnVolup" android:layout_width="wrap_content"
+			android:textSize="10pt" android:layout_toRightOf="@+id/btnVolup"
+			android:layout_alignBaseline="@+id/btnVolup" android:layout_height="wrap_content"></Button>
+		<TextView android:id="@+id/TextView01" android:text="节目"
+			android:layout_alignLeft="@+id/btnProgramup" android:layout_below="@+id/btnProgramup"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content" android:textColor="@color/black"
+			android:layout_height="wrap_content"></TextView>
+		<TextView android:id="@+id/TextView04" android:text="信源"
+			android:layout_alignBottom="@+id/txtMenu" android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content" android:layout_alignParentRight="true"
+			android:textColor="@color/black" android:layout_marginRight="42dp"
+			android:layout_alignBaseline="@+id/txtMenu" android:layout_height="wrap_content"></TextView>
+		<TextView android:id="@+id/txtMenu"
+			android:layout_centerHorizontal="true" android:text="菜单"
+			android:layout_alignBottom="@+id/TextView03" android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content" android:textColor="@color/black"
+			android:layout_alignBaseline="@+id/TextView03" android:layout_height="wrap_content"></TextView>
+		<ImageView android:layout_alignBottom="@+id/btnProgramup"
+			android:src="@drawable/menu" android:layout_width="wrap_content"
+			android:layout_alignRight="@+id/txtMenu" android:id="@+id/btnMenu"
+			android:layout_height="wrap_content"></ImageView>
+		<ImageView android:src="@drawable/signal"
+			android:layout_width="wrap_content" android:layout_alignRight="@+id/TextView04"
+			android:layout_alignTop="@+id/btnExit" android:id="@+id/btnSignal"
+			android:layout_height="wrap_content"></ImageView>
+		<ImageView android:src="@drawable/exit"
+			android:layout_width="wrap_content" android:layout_marginLeft="14dp"
+			android:layout_alignTop="@+id/btnMenu" android:layout_toRightOf="@+id/btnMenu"
+			android:id="@+id/btnExit" android:layout_height="wrap_content"></ImageView>
+		<TextView android:id="@+id/TextView03" android:text="退出"
+			android:layout_alignLeft="@+id/btnExit" android:layout_below="@+id/TextView01"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content" android:textColor="@color/black"
+			android:layout_height="wrap_content"></TextView>
+		<TextView android:id="@+id/textView1" android:text="音量"
+			android:layout_alignLeft="@+id/btnVolup" android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content" android:textColor="@color/black"
+			android:layout_height="wrap_content" android:layout_above="@+id/txtMenu"></TextView>
+		<Button android:id="@+id/btnVoldown" android:text="-"
+			android:layout_width="wrap_content" android:textSize="10pt"
+			android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true" android:layout_alignLeft="@+id/textView1"></Button>
+		<Button android:id="@+id/btnProgramdown" android:text="-"
+			android:layout_width="wrap_content" android:textSize="10pt"
+			android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true" android:layout_alignLeft="@+id/TextView01"></Button>
+	</RelativeLayout>
+	<RelativeLayout android:layout_height="wrap_content"
+		android:id="@+id/relativeLayout2" android:layout_width="match_parent"
+		android:layout_weight="0.48">
+		<ImageView android:layout_width="wrap_content" android:id="@+id/arrowLeft"
+			android:layout_height="wrap_content" android:layout_centerVertical="true"
+			android:layout_alignParentLeft="true" android:src="@drawable/arrow_left"></ImageView>
+		<ImageView android:layout_width="wrap_content" android:id="@+id/btnOK"
+			android:layout_height="wrap_content" android:layout_centerVertical="true"
+			android:layout_alignLeft="@+id/arrowUp" android:src="@drawable/arrow_ok"></ImageView>
+		<ImageView android:src="@drawable/arrow_right"
+			android:layout_width="wrap_content" android:id="@+id/arrowRight"
+			android:layout_height="wrap_content" android:layout_alignTop="@+id/arrowLeft"
+			android:layout_toRightOf="@+id/arrowUp" android:layout_marginLeft="16dp"></ImageView>
+		<ImageView android:src="@drawable/arrow_down"
+			android:layout_width="wrap_content" android:id="@+id/arrowDown"
+			android:layout_height="wrap_content" android:layout_below="@+id/arrowLeft"
+			android:layout_alignLeft="@+id/arrowUp" android:layout_marginTop="20dp"></ImageView>
+		<ImageView android:src="@drawable/arrow_up"
+			android:layout_width="wrap_content" android:id="@+id/arrowUp"
+			android:layout_height="wrap_content" android:layout_above="@+id/btnOK"
+			android:layout_toRightOf="@+id/arrowLeft"
+			android:layout_marginLeft="19dp" android:layout_marginBottom="23dp"></ImageView>
+		<ImageView android:layout_width="wrap_content" android:id="@+id/btnNum3"
+			android:layout_height="wrap_content" android:layout_alignBottom="@+id/arrowUp"
+			android:layout_alignParentRight="true" android:layout_marginRight="35dp"
+			android:layout_marginBottom="14dp" android:src="@drawable/num_3"></ImageView>
+		<ImageView android:layout_width="wrap_content" android:id="@+id/btnNum2"
+			android:layout_height="wrap_content" android:layout_alignTop="@+id/btnNum3"
+			android:layout_toLeftOf="@+id/btnNum3"
+			android:layout_marginRight="15dp" android:src="@drawable/num_2"></ImageView>
+		<ImageView android:src="@drawable/num_1"
+			android:layout_width="wrap_content" android:id="@+id/btnNum1"
+			android:layout_height="wrap_content" android:layout_alignTop="@+id/btnNum3"
+			android:layout_toRightOf="@+id/arrowRight"
+			android:layout_marginLeft="30dp"></ImageView>
+		<ImageView android:layout_width="wrap_content" android:id="@+id/btnNum7"
+			android:layout_height="wrap_content" android:layout_alignTop="@+id/arrowRight"
+			android:layout_alignLeft="@+id/btnNum1" android:layout_marginTop="14dp"
+			android:src="@drawable/num_7"></ImageView>
+		<ImageView android:layout_width="wrap_content" android:id="@+id/btnShow"
+			android:layout_height="wrap_content" android:layout_alignTop="@+id/arrowDown"
+			android:layout_alignLeft="@+id/btnNum1" android:src="@drawable/num_show"></ImageView>
+		<ImageView android:layout_width="wrap_content" android:id="@+id/btnNum6"
+			android:layout_height="wrap_content" android:layout_alignTop="@+id/btnNum4"
+			android:layout_alignLeft="@+id/btnNum3" android:src="@drawable/num_6"></ImageView>
+		<ImageView android:layout_width="wrap_content" android:id="@+id/btnNum9"
+			android:layout_height="wrap_content" android:layout_alignTop="@+id/btnNum7"
+			android:layout_alignLeft="@+id/btnNum6" android:src="@drawable/num_9"></ImageView>
+		<ImageView android:layout_width="wrap_content" android:id="@+id/btnNum0"
+			android:layout_height="wrap_content" android:layout_alignTop="@+id/btnShow"
+			android:layout_alignLeft="@+id/btnNum5" android:src="@drawable/num_0"></ImageView>
+		<ImageView android:layout_width="wrap_content" android:id="@+id/btnReview"
+			android:layout_height="wrap_content" android:layout_alignTop="@+id/btnNum0"
+			android:layout_alignLeft="@+id/btnNum6" android:src="@drawable/num_review"></ImageView>
+		<ImageView android:layout_width="wrap_content" android:id="@+id/btnNum4"
+			android:layout_height="wrap_content" android:layout_below="@+id/btnNum3"
+			android:layout_alignLeft="@+id/btnNum7" android:src="@drawable/num_4"></ImageView>
+		<ImageView android:layout_width="wrap_content" android:id="@+id/btnNum8"
+			android:layout_height="wrap_content" android:layout_alignTop="@+id/btnNum9"
+			android:layout_alignLeft="@+id/btnNum0" android:src="@drawable/num_8"></ImageView>
+		<ImageView android:layout_width="wrap_content" android:id="@+id/btnNum5"
+			android:layout_height="wrap_content" android:layout_alignTop="@+id/btnNum4"
+			android:layout_alignLeft="@+id/btnNum2" android:src="@drawable/num_5"></ImageView>
+
+	</RelativeLayout>
+
+</LinearLayout>
+			
+			

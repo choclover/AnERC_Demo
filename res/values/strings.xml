@@ -3,8 +3,15 @@
     <string name="mainapp_name">AnERC_Demo</string>
     <string name="launcher_name">Launcher</string>
     <string name="login_title">i@HOME 智能家居</string>
+    <string name="title_myhome">我的家居</string>
     <string name="my_phonenum">本机号码</string>
     <string name="login_pwd">登录密码</string>
     <string name="login">登    录</string>
     <string name="control">遥控</string>
+    <string name="refreshing">刷新中...</string>
+    <string name="security">安防</string>
+    <string name="airconditioner">空调</string>
+    <string name="tvset">电视机</string>
+    <string name="settop">机顶盒</string>
+    <string name="water_heater">热水器</string>
 </resources>

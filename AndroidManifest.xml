@@ -12,10 +12,14 @@
    
     <activity android:name=".ui.WelcomeScreen"></activity>
     <activity android:name=".ui.LoginScreen"></activity>
+    <activity android:name=".ui.DeviceListScreen"></activity>
+    <activity android:name=".ui.AlarmScreen" android:launchMode="singleInstance"></activity>
+    <activity android:name=".ui.AirConditionerScreen" android:launchMode="singleInstance"></activity>
+    <activity android:name=".ui.TvScreen" android:launchMode="singleInstance"></activity>
     
 	</application>
 
-  <uses-sdk android:minSdkVersion="8" />
+  <uses-sdk android:minSdkVersion="6" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
   <uses-permission android:name="android.permission.RECEIVE_SMS" />

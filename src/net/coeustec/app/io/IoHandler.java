@@ -8,11 +8,13 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import net.coeustec.app.MessageHandler;
+import net.coeustec.app.ResourceManager;
 import net.coeustec.engine.AppHandler;
 import net.coeustec.engine.ClientEngine;
 import net.coeustec.engine.Event;
 import net.coeustec.engine.request.Response;
 import net.coeustec.model.exception.STDException;
+import net.coeustec.ui.BaseScreen;
 import net.coeustec.util.XmlNode;
 import net.coeustec.util.logger.Logger;
 import android.os.Handler;
@@ -134,6 +136,9 @@ public class IoHandler implements AppHandler {
         outputConnThread.sendMsgStr(msg);
       } else {
         Logger.w(TAG, "IO connection is NULL");
+//        BaseScreen.showConfirmDialog("网络故障",
+//            "网络连接故障，请退出程序重试！");
+            
       }
     } catch (STDException e) {
       Logger.w(TAG, "SendMsgStr() got error of "+e.getMessage());
@@ -150,6 +155,7 @@ public class IoHandler implements AppHandler {
     Response resp = new Response();
     resp.setName(respType);
     resp.setErrcode(errcode);
+    resp.setData(xmlRoot);
     
     Message message = this.msgHandler.obtainMessage(Event.SIGNAL_TYPE_REQACK, resp);
     this.msgHandler.sendMessage(message);
@@ -277,7 +283,7 @@ public class IoHandler implements AppHandler {
         throw new STDException("Output stream should NOT be null!");
       }
 
-      Logger.i("Ready to send msg:\n"+msg);
+      Logger.i(TAG, "Ready to send msg:\n"+msg);
       
       try {
         byte[] msgBytes;
@@ -336,7 +342,7 @@ public class IoHandler implements AppHandler {
             Logger.i(TAG, "AndrClient Got a message:\n" + msgStr);
             if (msgStr == null || msgStr.trim().length() == 0) {
               continue;
-			}
+            }
             
             try {
               XmlNode msgObjRoot = new XmlNode();

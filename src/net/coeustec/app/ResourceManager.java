@@ -6,6 +6,7 @@ public class ResourceManager {
   public static final String RES_STR_CANCEL = "\u53d6\u6d88";     //取消
   public static final String RES_STR_QUITAPP = "\u9000\u51fa\u7a0b\u5e8f";    //退出程序
   public static final String RES_STR_LOGIN = "\u767b\u5f55";       //登录
+  public static final String RES_STR_REMOTECONTROL = "\u9065\u63a7";       //遥控
   
   public static final String RES_STR_FAIL = "\u5931\u8d25";     //失败
   public static final String RES_STR_SUCCESS = "\u6210\u529f";  //成功

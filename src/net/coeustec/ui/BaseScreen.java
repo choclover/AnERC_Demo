@@ -1,12 +1,14 @@
 package net.coeustec.ui;
 
 import net.coeustec.app.ResourceManager;
+import net.coeustec.engine.ClientEngine;
 import net.coeustec.engine.request.Response;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.view.KeyEvent;
 
 public class BaseScreen extends Activity {
   private ProgressDialog processDialog;
@@ -33,10 +35,7 @@ public class BaseScreen extends Activity {
     builder.setPositiveButton(ResourceManager.RES_STR_OK,
         new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int whichButton) {
-
-            int pid = android.os.Process.myPid();
-            System.exit(0);
-            android.os.Process.killProcess(pid);
+            ClientEngine.getInstance().exitApp();
           }
         }).setNegativeButton(ResourceManager.RES_STR_CANCEL, null);
 
@@ -79,4 +78,14 @@ public class BaseScreen extends Activity {
     return;
   }
 
+  @Override
+  public boolean onKeyDown(int keyCode, KeyEvent event) {
+    switch (keyCode) {
+    case KeyEvent.KEYCODE_HOME: 
+      ClientEngine.getInstance().exitApp();
+      return true;
+    }
+
+    return super.onKeyDown(keyCode, event);
+  }
 }

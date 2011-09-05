@@ -1,6 +1,7 @@
 package net.coeustec.ui;
 
 import net.coeustec.model.exception.STDException;
+import net.coeustec.util.ActivityUtil;
 import net.coeustec.util.logger.Logger;
 
 import net.coeustec.R;
@@ -44,7 +45,6 @@ public class LoginScreen extends BaseScreen {
     // setTopBarButton();
     // setBottomBarButton();
     setBodyView();
-    // initCallBack();
 
     // 特别处理，隐藏状态条
     // RelativeLayout topbar = (RelativeLayout) findViewById(R.id.headerBar);
@@ -82,6 +82,8 @@ public class LoginScreen extends BaseScreen {
     // .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     // View view = inflater.inflate(R.layout.loginscreen, null);
 
+    ActivityUtil.setNoTitle(this);
+    ActivityUtil.setFullscreen(this);
     setContentView(R.layout.loginscreen);
   }
 
@@ -144,10 +146,7 @@ public class LoginScreen extends BaseScreen {
       } else {
         ScreenManager.removeTopActivity();
 
-        // MainScreen.temperature = ((LoginEventRsp) login)
-        // .getTemperature();
-        // MainScreen.humidity = ((LoginEventRsp) login).getHumidity();
-        // ActivityUtil.directToIntent(LoginScreen.this, MainScreen.class);
+        ActivityUtil.directToIntent(LoginScreen.this, DeviceListScreen.class);
 
         finish();
       }

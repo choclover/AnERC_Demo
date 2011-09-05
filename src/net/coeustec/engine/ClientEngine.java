@@ -141,4 +141,10 @@ public class ClientEngine implements AppHandler {
     Request request = new LoginRequest(phoneNum, passwd);
     msgHandler.sendRequest(request);
   }
+  
+  public void exitApp() {
+    int pid = android.os.Process.myPid();
+    System.exit(0);
+    android.os.Process.killProcess(pid);
+  }
 }

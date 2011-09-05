@@ -6,6 +6,7 @@ public class Response /*extends Message*/ {
   private String respName;
   private int errcode = Event.ERRCODE_NOERROR;
   private int respType = 0;
+  private Object data;
   
   /*
    * Constants
@@ -44,6 +45,14 @@ public class Response /*extends Message*/ {
 
   public void setRespType(int respType) {
     this.respType = respType;
+  }
+
+  public Object getData() {
+    return data;
+  }
+
+  public void setData(Object data) {
+    this.data = data;
   }
   
 }
