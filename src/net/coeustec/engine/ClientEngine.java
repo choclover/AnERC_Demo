@@ -126,9 +126,15 @@ public class ClientEngine implements AppHandler {
   }
   
   public String getErcSN() {
-    return "434954D31107";
+    String sn = "434954D31107";
+    sn = "434954D31109";  //simulated HOMEBOX 3
+    return sn;
   }
 
+  public String getIMSI() {
+    return "359426002899056";
+  }
+  
   public void loginServer(String phonenum, String passwd) throws STDException {
     Logger.i(TAG, "enter loginServer with "+phonenum+ " & "+passwd);
     

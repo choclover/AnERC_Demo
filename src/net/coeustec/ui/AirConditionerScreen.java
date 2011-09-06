@@ -31,12 +31,13 @@ public class AirConditionerScreen extends BaseScreen {
   protected ProgressBar pbar = null;
   protected PopupWindow popup = null;
 
-  public boolean ac_poweron = false;
-  public int ac_mode = 1;
+  public static boolean ac_poweron = false;
+  public static int ac_mode = 1;
+  public static int ac_temp = 25;
   
-  final String[] ac_modeStr = {"制冷", "制热 ", "除湿 ", "通风", "自动" };
+  static final String[] ac_modeStr = {"制冷", "制热 ", "除湿 ", "通风", "自动" };
   // 1. 制冷 //2. 制热 //3. 除湿 //4. 通风 //5. 自动
-  public int ac_temp = 25;
+  
 
   // public ImageView btnPower;
   public ImageView btnMode;
@@ -47,11 +48,6 @@ public class AirConditionerScreen extends BaseScreen {
   public ImageAdapter modeGaAdapter;
   public RelativeLayout seekLayout;
   
-  // protected int[] resArray = new int[] { R.drawable.icon, R.drawable.icon,
-  // R.drawable.icon, R.drawable.icon };
-
-  // protected String[] title = new String[]{"清除登录信息", "推荐给好友", "帮助", "退出"};
-
   private String deviceId;
 
   @Override
@@ -76,6 +72,9 @@ public class AirConditionerScreen extends BaseScreen {
     });
 
     ImageView btnPower = (ImageView) findViewById(R.id.btnPower);
+    int id = ac_poweron ? R.drawable.poweron : R.drawable.poweroff;
+    btnPower.setImageDrawable(btnPower.getResources().getDrawable(id));
+    btnPower.invalidate();
     btnPower.setOnClickListener(new View.OnClickListener() {
       public void onClick(View view) {
         Logger.i("btnPower is clicked!");
@@ -94,6 +93,7 @@ public class AirConditionerScreen extends BaseScreen {
     });
 
     btnMode = (ImageView) findViewById(R.id.modebtn);
+    refreshAirMode(ac_mode);
     btnMode.setOnClickListener(new View.OnClickListener() {
       public void onClick(View view) {
         Logger.i("btnMode is clicked!");
@@ -103,6 +103,7 @@ public class AirConditionerScreen extends BaseScreen {
 
     tvTemprature = (TextView) findViewById(R.id.temeratureTxt);
     tvTemprature.setText(String.valueOf(ac_temp));
+    tvTemprature.invalidate();
     tvTemprature.setOnClickListener(new View.OnClickListener() {
       public void onClick(View view) {
         Logger.i("tvTemp is clicked!");
@@ -128,8 +129,8 @@ public class AirConditionerScreen extends BaseScreen {
       reqBuff.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
 
       reqBuff.append("<erc operator=\"control\" direction=\"request\">");
-      reqBuff.append("<ercsn>434954D31107</ercsn>");
-      reqBuff.append("<clientimsi>359426002899056</clientimsi>");
+      reqBuff.append("<ercsn>" +ClientEngine.getInstance().getErcSN() +"</ercsn>");
+      reqBuff.append("<clientimsi>" +ClientEngine.getInstance().getIMSI() +"</clientimsi>");
       reqBuff.append("<device>");
       reqBuff.append("<deviceid>").append(this.deviceId).append("</deviceid>");
       reqBuff.append("<keys>");
@@ -248,6 +249,7 @@ public class AirConditionerScreen extends BaseScreen {
           int paramInt, long paramLong) {
         Logger.i("onItemClick()! ");
         refreshAirMode(paramInt + 1);
+        seekLayout.removeAllViews();
         
         updateStatus();
       }
@@ -282,11 +284,6 @@ public class AirConditionerScreen extends BaseScreen {
     btnMode.setImageDrawable(btnMode.getResources().getDrawable(resId));
     btnMode.invalidate();
 
-    if (false) {
-      modeGaAdapter.removeAll();
-    } else {
-      seekLayout.removeView(modeGa);
-    }
   }
   
   private void updateStatus() {

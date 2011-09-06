@@ -17,7 +17,7 @@ import android.widget.TextView;
 public class AlarmScreen extends BaseScreen {
 
   private String deviceId;
-  private boolean bFortify = false;
+  private static boolean bFortify = false;
   
   public ImageView btnFortify;
   
@@ -66,8 +66,8 @@ public class AlarmScreen extends BaseScreen {
       reqBuff.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
       
       reqBuff.append("<erc operator=\"control\" direction=\"request\">");
-      reqBuff.append("<ercsn>434954D31107</ercsn>");
-      reqBuff.append("<clientimsi>359426002899056</clientimsi>");
+      reqBuff.append("<ercsn>" +ClientEngine.getInstance().getErcSN() +"</ercsn>");
+      reqBuff.append("<clientimsi>" +ClientEngine.getInstance().getIMSI() +"</clientimsi>");
       reqBuff.append("<device>");
       reqBuff.append("<deviceid>").append(this.deviceId).append("</deviceid>");
       reqBuff.append("<keys>");

@@ -33,11 +33,6 @@ public class LoginScreen extends BaseScreen {
   protected ProgressBar pbar = null;
   protected PopupWindow popup = null;
 
-  // protected int[] resArray = new int[] { R.drawable.icon, R.drawable.icon,
-  // R.drawable.icon, R.drawable.icon };
-
-  // protected String[] title = new String[]{"清除登录信息", "推荐给好友", "帮助", "退出"};
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -52,6 +47,10 @@ public class LoginScreen extends BaseScreen {
 
     addToManager(this);
 
+    EditText phoneNum = ((EditText) findViewById(R.id.etPhonenum));
+    phoneNum.setText("15365185895");
+    phoneNum.setText("15365185894");
+    
     Button btnLogin = (Button) findViewById(R.id.btnLogin);
     btnLogin.setOnClickListener(new View.OnClickListener() {
       public void onClick(View view) {
@@ -171,34 +170,5 @@ public class LoginScreen extends BaseScreen {
 
     return super.onKeyDown(keyCode, event);
   }
-
-  // class LoginMenuAdapter extends MenuAdapter {
-  // public LoginMenuAdapter(Context context) {
-  // super(context);
-  // }
-  //		
-  // @Override
-  // public View getView(final int position, View arg1, ViewGroup arg2) {
-  // LinearLayout linear = (LinearLayout) super.getView(position, arg1, arg2);
-  // linear.setOnClickListener(new OnClickListener(){
-  // @Override
-  // public void onClick(View v) {
-  // if (position == 0) {
-  // // TODO
-  // } else if (position == 1) {
-  // // TODO
-  // } else if (position == 2) {
-  // // TODO
-  // } else if (position == 3) {
-  // DialogUtil.QuitAppDialog(LoginScreen.this);
-  // }
-  // pw.dismiss();
-  // }
-  // });
-  //			
-  // return linear;
-  // }
-  //		
-  // }
 
 }

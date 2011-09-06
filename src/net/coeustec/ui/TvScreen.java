@@ -21,8 +21,8 @@ import android.widget.Toast;
 public class TvScreen extends BaseScreen {
 
   private String deviceId;
-  private boolean bPower = false;
-  private boolean bMute = false;
+  private static boolean bPower = false;
+  private static boolean bMute = false;
   
   public ImageView btnPower, btnMute;
   public Button btnVolup, btnVoldown, btnProgramdown, btnProgramup;
@@ -85,6 +85,9 @@ public class TvScreen extends BaseScreen {
     title.setText(value);
     
     btnPower = (ImageView)findViewById(R.id.btnPower);
+    int id = bPower ? R.drawable.poweron : R.drawable.poweroff;
+    btnPower.setImageDrawable(btnPower.getResources().getDrawable(id));
+    btnPower.invalidate();
     btnPower.setOnClickListener(new View.OnClickListener() {
       public void onClick(View view) {
         Logger.i("View ID is: "+view.getId()+"\t btnPower is:"+R.id.btnPower);
@@ -102,6 +105,9 @@ public class TvScreen extends BaseScreen {
     });
     
     btnMute = (ImageView)findViewById(R.id.btnMute);
+    id = bMute ? R.drawable.mute : R.drawable.unmute;
+    btnMute.setImageDrawable(btnMute.getResources().getDrawable(id));
+    btnMute.invalidate();
     btnMute.setOnClickListener(new View.OnClickListener() {
       public void onClick(View view) {
         Logger.i("View ID is: "+view.getId()+"\tbtnMute is:"+R.id.btnMute);
@@ -231,8 +237,8 @@ public class TvScreen extends BaseScreen {
       StringBuffer reqBuff = new StringBuffer();
       reqBuff.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
       reqBuff.append("<erc operator=\"control\" direction=\"request\">");
-      reqBuff.append("<ercsn>434954D31107</ercsn>");
-      reqBuff.append("<clientimsi>359426002899056</clientimsi>");
+      reqBuff.append("<ercsn>" +ClientEngine.getInstance().getErcSN() +"</ercsn>");
+      reqBuff.append("<clientimsi>" +ClientEngine.getInstance().getIMSI() +"</clientimsi>");
       reqBuff.append("<device>");
       reqBuff.append("<deviceid>").append(this.deviceId).append("</deviceid>");
       reqBuff.append("<keys>");

@@ -23,8 +23,10 @@ public class LoginRequest extends Request {
       reqBuff.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
       reqBuff.append("<erc operator=\"login\" direction=\"request\">");
       reqBuff.append("<clienttype>2</clienttype>");
-      reqBuff.append("<clientimsi>359426002899056</clientimsi>");
+      
       reqBuff.append("<ercsn>" +ClientEngine.getInstance().getErcSN() +"</ercsn>");
+      reqBuff.append("<clientimsi>" +ClientEngine.getInstance().getIMSI() +"</clientimsi>");
+      
       reqBuff.append("<clientconfig>0</clientconfig>");
       reqBuff.append("<clientsoftware>V0.8</clientsoftware>");
       reqBuff.append("<clientos>Android</clientos>");

@@ -138,8 +138,8 @@ public class DeviceListScreen extends BaseScreen {
     
     if (true) {
       reqBuff.append("<erc operator=\"synchronize\" direction=\"request\">");
-      reqBuff.append("<ercsn>434954D31107</ercsn>");
-      reqBuff.append("<clientimsi>359426002899056</clientimsi>");
+      reqBuff.append("<ercsn>" +ClientEngine.getInstance().getErcSN() +"</ercsn>");
+      reqBuff.append("<clientimsi>" +ClientEngine.getInstance().getIMSI() +"</clientimsi>");
       
     } else {
       reqBuff.append("<erc operator=\"control\" direction=\"request\">");

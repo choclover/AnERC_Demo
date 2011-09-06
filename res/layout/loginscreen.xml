@@ -14,13 +14,20 @@
 			android:src="@drawable/logo" android:layout_height="wrap_content"
 			android:layout_centerVertical="true" android:layout_alignParentLeft="true"
 			android:layout_marginLeft="14dp"></ImageView>
-		<TextView android:textSize="7pt" android:text="i@HOME致力于为普通家庭提供远程实时安防及家居设备控制服务, 让所有家庭都能轻松享受安全、舒适、时尚的智能家居生活。" android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/textView3" android:layout_width="180dip" android:textColor="@color/black" android:layout_height="wrap_content" android:layout_centerVertical="true" android:layout_alignParentRight="true" android:layout_marginRight="16dp"></TextView>
+		<TextView android:textSize="7pt"
+			android:text="i@HOME致力于为普通家庭提供远程实时安防及家居设备控制服务, 让所有家庭都能轻松享受安全、舒适、时尚的智能家居生活。"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:id="@+id/textView3" android:layout_width="180dip"
+			android:textColor="@color/black" android:layout_height="wrap_content"
+			android:layout_centerVertical="true" android:layout_alignParentRight="true"
+			android:layout_marginRight="16dp"></TextView>
 	</RelativeLayout>
 	<View android:layout_width="wrap_content" android:id="@+id/view2"
 		android:layout_height="1px" android:background="@color/grey"></View>
 
 	<RelativeLayout android:layout_width="match_parent"
-		android:id="@+id/relativeLayout1" android:layout_height="152dp" android:layout_weight="0.72">
+		android:id="@+id/relativeLayout1" android:layout_height="152dp"
+		android:layout_weight="0.72">
 		<ImageView android:layout_width="91dp" android:id="@+id/ImageView02"
 			android:src="@drawable/myhome_default" android:layout_height="91dp"
 			android:layout_alignParentTop="true" android:layout_centerHorizontal="true"></ImageView>
@@ -44,9 +51,12 @@
 			android:layout_alignLeft="@+id/etPhonenum">
 			<requestFocus></requestFocus>
 		</EditText>
-		<EditText android:inputType="phone" android:layout_width="150dip" android:id="@+id/etPhonenum" android:text="15365185898" android:layout_height="wrap_content" android:layout_below="@+id/ImageView02" android:layout_alignParentRight="true" android:layout_marginRight="19dp" android:layout_marginTop="23dp"></EditText>
+		<EditText android:inputType="phone" android:layout_width="150dip"
+			android:id="@+id/etPhonenum" android:text="15365185898"
+			android:layout_height="wrap_content" android:layout_below="@+id/ImageView02"
+			android:layout_alignParentRight="true" android:layout_marginRight="19dp"
+			android:layout_marginTop="23dp"></EditText>
 	</RelativeLayout>
-
 
 	<View android:layout_width="wrap_content" android:id="@+id/view1"
 		android:layout_height="2px" android:background="@color/grey"></View>
