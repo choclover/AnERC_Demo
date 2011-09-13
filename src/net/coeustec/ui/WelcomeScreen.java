@@ -47,6 +47,7 @@ public class WelcomeScreen extends BaseScreen {
   public boolean onKeyDown(int keyCode, KeyEvent event) {
     switch (keyCode) {
     case KeyEvent.KEYCODE_BACK:
+      mHandler.removeMessages(0);
       finish();
       return true;
     }
