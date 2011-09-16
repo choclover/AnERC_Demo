@@ -7,6 +7,7 @@ import net.coeustec.ui.WelcomeScreen;
 import net.coeustec.util.ActivityUtil;
 import net.coeustec.util.logger.Logger;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 public class MainApp extends Activity {
@@ -28,6 +29,14 @@ public class MainApp extends Activity {
     ActivityUtil.directToIntent(this, WelcomeScreen.class);
     
     finish();
+  }
+  
+  public void saveSettings() {
+    
+  }
+  
+  public void loadSettings() {
+    SharedPreferences settings = getPreferences(Activity.MODE_PRIVATE);
   }
 
 }

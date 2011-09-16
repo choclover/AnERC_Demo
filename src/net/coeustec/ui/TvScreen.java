@@ -49,6 +49,7 @@ public class TvScreen extends BaseScreen {
     buttonValMap.put(R.id.btnSignal, "0403");
     buttonValMap.put(R.id.btnOK, "0404");
     buttonValMap.put(R.id.btnShow, "0405");
+    buttonValMap.put(R.id.btnReview, "0406");  
     
     buttonValMap.put(R.id.arrowUp, "0600");
     buttonValMap.put(R.id.arrowDown, "0601");
@@ -65,8 +66,7 @@ public class TvScreen extends BaseScreen {
     buttonValMap.put(R.id.btnNum7, "0507");
     buttonValMap.put(R.id.btnNum8, "0508");
     buttonValMap.put(R.id.btnNum9, "0509");
-
-    buttonValMap.put(R.id.btnReview, "");  //no code mapping
+    
   }
   
   @Override

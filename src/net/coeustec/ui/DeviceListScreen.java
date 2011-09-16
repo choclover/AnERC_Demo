@@ -25,6 +25,7 @@ import android.os.Message;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
 import android.widget.ExpandableListView.OnChildClickListener;
@@ -116,14 +117,20 @@ public class DeviceListScreen extends BaseScreen {
       }
     });
     
-    sendRequest();
-
+    ImageView syncBtn = (ImageView)findViewById(R.id.sync_btn);
+    syncBtn.setOnClickListener(new View.OnClickListener() {
+      public void onClick(View view) {
+        Logger.i("Sync Button is clicked!");
+        sendRequest();
+      }
+    });
+    
     handler = new Handler() {
       public void handleMessage(Message msg) {
         switch (msg.what) {
         case 1:
           showConfirmDialog("同步失败", "没有收到设备同步数据！");
-          sendRequest();
+          //sendRequest();
           break;
         }
         super.handleMessage(msg);
@@ -142,17 +149,17 @@ public class DeviceListScreen extends BaseScreen {
       reqBuff.append("<clientimsi>" +ClientEngine.getInstance().getIMSI() +"</clientimsi>");
       
     } else {
-      reqBuff.append("<erc operator=\"control\" direction=\"request\">");
-      reqBuff.append("<ercsn>434954D31107</ercsn>");
-      reqBuff.append("<clientimsi>359426002899056</clientimsi>");
-      reqBuff.append("<device>");
-      reqBuff.append("<deviceid>0101</deviceid>");
-      reqBuff.append("<keys>");
-      reqBuff.append("<keyvalue>0419</keyvalue>");
-      reqBuff.append("<keyvalue>0202</keyvalue>");
-      reqBuff.append("<keyvalue>0101</keyvalue>");
-      reqBuff.append("</keys>");
-      reqBuff.append("</device>");
+//      reqBuff.append("<erc operator=\"control\" direction=\"request\">");
+//      reqBuff.append("<ercsn>434954D31107</ercsn>");
+//      reqBuff.append("<clientimsi>359426002899056</clientimsi>");
+//      reqBuff.append("<device>");
+//      reqBuff.append("<deviceid>0101</deviceid>");
+//      reqBuff.append("<keys>");
+//      reqBuff.append("<keyvalue>0419</keyvalue>");
+//      reqBuff.append("<keyvalue>0202</keyvalue>");
+//      reqBuff.append("<keyvalue>0101</keyvalue>");
+//      reqBuff.append("</keys>");
+//      reqBuff.append("</device>");
     }
     
     reqBuff.append("</erc>");
@@ -170,7 +177,9 @@ public class DeviceListScreen extends BaseScreen {
         handler.sendMessage(message);   
       }
     };
-    timer.schedule(timeoutTask, 3000);
+    
+    //some seconds later, if timeout, will show error message and resend the synchronize request
+    timer.schedule(timeoutTask, 3000); 
   }
   
   @Override

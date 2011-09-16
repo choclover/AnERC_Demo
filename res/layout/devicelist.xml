@@ -10,13 +10,18 @@
 			android:layout_height="wrap_content" android:layout_width="wrap_content"
 			android:src="@drawable/myhome_default"
 			android:layout_alignParentLeft="true" android:layout_alignParentTop="true"></ImageView>
-		<ImageView android:src="@drawable/data_sync" android:layout_width="wrap_content" android:id="@+id/imageView2" android:layout_height="wrap_content" android:layout_centerVertical="true" android:layout_alignParentRight="true" android:layout_marginRight="18dp"></ImageView>
-		<TextView android:text="@string/title_myhome" android:layout_width="wrap_content" android:id="@+id/tv_title" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_centerVertical="true" android:layout_centerHorizontal="true"></TextView>
+		<ImageView android:src="@drawable/data_sync"
+			android:layout_width="wrap_content" android:id="@+id/sync_btn"
+			android:layout_height="wrap_content" android:layout_centerVertical="true"
+			android:layout_alignParentRight="true" android:layout_marginRight="18dp" android:clickable="true"></ImageView>
+		<TextView android:text="@string/title_myhome"
+			android:layout_width="wrap_content" android:id="@+id/tv_title"
+			android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_centerVertical="true" android:layout_centerHorizontal="true"></TextView>
 	</RelativeLayout>
 	<ExpandableListView android:layout_height="wrap_content"
-		android:id="@+id/deviceList" android:layout_width="match_parent" 
-		android:groupIndicator="@drawable/expander_group"
-		>
+		android:id="@+id/deviceList" android:layout_width="match_parent"
+		android:groupIndicator="@drawable/expander_group">
 	</ExpandableListView>
 
 
