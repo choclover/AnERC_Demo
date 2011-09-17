@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import net.coeustec.app.MainApp;
 import net.coeustec.app.ResourceManager;
 
 import net.coeustec.app.MessageHandler;
@@ -77,6 +78,7 @@ public class ClientEngine implements AppHandler {
     //Create IoHandler instance
     this.ioHandler =  IoHandler.getInstance();
     
+    ((MainApp)launcher).loadSettings();
   }
   
   //////////////////////////////////////////////////////////////////////////////
@@ -149,6 +151,8 @@ public class ClientEngine implements AppHandler {
   }
   
   public void exitApp() {
+    ((MainApp)launcher).saveSettings();
+    
     int pid = android.os.Process.myPid();
     android.os.Process.killProcess(pid);
     

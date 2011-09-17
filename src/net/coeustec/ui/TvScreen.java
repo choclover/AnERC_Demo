@@ -21,8 +21,9 @@ import android.widget.Toast;
 public class TvScreen extends BaseScreen {
 
   private String deviceId;
-  private static boolean bPower = false;
-  private static boolean bMute = false;
+  
+  public static boolean bPoweron = false;
+  public static boolean bMute = false;
   
   public ImageView btnPower, btnMute;
   public Button btnVolup, btnVoldown, btnProgramdown, btnProgramup;
@@ -85,17 +86,17 @@ public class TvScreen extends BaseScreen {
     title.setText(value);
     
     btnPower = (ImageView)findViewById(R.id.btnPower);
-    int id = bPower ? R.drawable.poweron : R.drawable.poweroff;
+    int id = bPoweron ? R.drawable.poweron : R.drawable.poweroff;
     btnPower.setImageDrawable(btnPower.getResources().getDrawable(id));
     btnPower.invalidate();
     btnPower.setOnClickListener(new View.OnClickListener() {
       public void onClick(View view) {
         Logger.i("View ID is: "+view.getId()+"\t btnPower is:"+R.id.btnPower);
-        bPower = !bPower;
+        bPoweron = !bPoweron;
         
-        enableAllButton(bPower);
+        enableAllButton(bPoweron);
         
-        int id = bPower ? R.drawable.poweron : R.drawable.poweroff;
+        int id = bPoweron ? R.drawable.poweron : R.drawable.poweroff;
         ((ImageView) view)
             .setImageDrawable(view.getResources().getDrawable(id));
         view.invalidate();
@@ -135,7 +136,7 @@ public class TvScreen extends BaseScreen {
     };
     
     initButtons(listener);
-    enableAllButton(bPower);
+    enableAllButton(bPoweron);
     
   }
 

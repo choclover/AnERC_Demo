@@ -7,7 +7,9 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.w3c.dom.NodeList;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import net.coeustec.R;
 import net.coeustec.app.ResourceManager;
@@ -18,7 +20,10 @@ import net.coeustec.util.ActivityUtil;
 import net.coeustec.util.XmlNode;
 import net.coeustec.util.XmlNodeList;
 import net.coeustec.util.logger.Logger;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -40,6 +45,16 @@ public class DeviceListScreen extends BaseScreen {
   TimerTask timeoutTask;
   Handler handler;
   
+  private final String DEVICE_LIST_INFO = "DEVICE_LIST";
+  
+  private final static String STR_ERCNAME = "ERC名称";
+  private final static String STR_AC = "空调";
+  private final static String STR_TV = "电视机";
+  private final static String STR_ALARM = "报警器";
+  private final static String STR_TOPSET = "机顶盒";
+  private final static String STR_HEATER = "热水器";
+  private final static String STR_DVD = "DVD";
+  
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
@@ -51,12 +66,12 @@ public class DeviceListScreen extends BaseScreen {
     groupAry = new ArrayList<Map<String, Object>>();
     childAry = new ArrayList<List<Map<String, Object>>>();
 
-    addInfo("空调", new String[] {/*"空调1", "空调2"*/  });
-    addInfo("电视机", new String[]{/*"电视机1"*/  });
-    addInfo("报警器", new String[] { /*"安防1", "安防2"*/ });
-    addInfo("机顶盒", new String[]{});  
-    addInfo("热水器", new String[]{});  
-    addInfo("DVD", new String[]{});  
+    addInfo(STR_AC, new String[] {/*"空调1", "空调2"*/  });
+    addInfo(STR_TV, new String[]{/*"电视机1"*/  });
+    addInfo(STR_ALARM, new String[] { /*"安防1", "安防2"*/ });
+    addInfo(STR_TOPSET, new String[]{});  
+    addInfo(STR_HEATER, new String[]{});  
+    addInfo(STR_DVD, new String[]{});  
     
     
     mAdapter = new SimpleExpandableListAdapter(
@@ -125,6 +140,9 @@ public class DeviceListScreen extends BaseScreen {
       }
     });
     
+    loadDeviceList();
+    
+    ///////////////////////
     handler = new Handler() {
       public void handleMessage(Message msg) {
         switch (msg.what) {
@@ -195,9 +213,8 @@ public class DeviceListScreen extends BaseScreen {
       }
       
       XmlNode xmlRoot = (XmlNode)response.getData();
-      String scrTitle = xmlRoot.selectSingleNodeText("ercname");
-      TextView tv = (TextView)findViewById(R.id.tv_title);
-      tv.setText(scrTitle);
+      String ercName = xmlRoot.selectSingleNodeText("ercname");
+      setErcName(ercName);
 
       this.groupAry.clear();
       this.childAry.clear();
@@ -241,16 +258,42 @@ public class DeviceListScreen extends BaseScreen {
         }
       }
       
-      addInfo("空调", arr1.toArray());
-      addInfo("电视机", arr2.toArray());
-      addInfo("报警器",arr3.toArray());
-      addInfo("机顶盒",arr4.toArray());
-      addInfo("热水器", arr5.toArray());
-      addInfo("DVD", arr6.toArray());
+      addInfo(STR_AC, arr1.toArray());
+      addInfo(STR_TV, arr2.toArray());
+      addInfo(STR_ALARM,arr3.toArray());
+      addInfo(STR_TOPSET,arr4.toArray());
+      addInfo(STR_HEATER, arr5.toArray());
+      addInfo(STR_DVD, arr6.toArray());
       
       mAdapter.notifyDataSetChanged();
       
+      JSONObject rootObj = new JSONObject();
+      try {
+        rootObj.put(STR_ERCNAME, ercName);
+        rootObj.put(STR_AC, new JSONArray(arr1));
+        rootObj.put(STR_TV, new JSONArray(arr2));
+        rootObj.put(STR_ALARM, new JSONArray(arr3));
+        rootObj.put(STR_TOPSET, new JSONArray(arr4));
+        rootObj.put(STR_HEATER, new JSONArray(arr5));
+        rootObj.put(STR_DVD, new JSONArray(arr6));
+        
+        String listStr = rootObj.toString();
+        Logger.i( "Device List is: "+listStr);
+        
+        saveDeviceList(listStr);
+        
+      } catch (JSONException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      
+
     }
+  }
+  
+  private void setErcName(String ercName) {
+    TextView tv = (TextView)findViewById(R.id.tv_title);
+    tv.setText(ercName);
   }
   
   private void addInfo(String str, Object[] c) {
@@ -284,5 +327,55 @@ public class DeviceListScreen extends BaseScreen {
     }
 
     return super.onKeyDown(keyCode, event);
+  }
+  
+  private void saveDeviceList(String listStr) {
+    SharedPreferences settings = getSharedPreferences(DEVICE_LIST_INFO, Context.MODE_PRIVATE);
+    Editor edit = settings.edit();
+    edit.putString("device_list", listStr);
+    edit.commit();
+  }
+  
+  private void loadDeviceList() {
+    try {
+      SharedPreferences settings = getSharedPreferences(DEVICE_LIST_INFO, Context.MODE_PRIVATE);
+      String listStr = settings.getString("device_list", "");
+      if (listStr == null || listStr.trim().length()<=0) {
+        Logger.v("List Str is EMPTY");
+        return;
+      } else {
+        Logger.v("List Str is: "+listStr);
+      }
+     
+      this.groupAry.clear();
+      this.childAry.clear();
+      JSONObject rootObj = new JSONObject(listStr);
+      
+      if (rootObj.has(STR_ERCNAME)) {
+        String ercName = rootObj.getString(STR_ERCNAME);
+        if (ercName != null && ercName.trim().length()>0) {
+          setErcName(ercName);
+        }
+      }
+      addInfo(STR_AC, getObjectAry(rootObj.getJSONArray(STR_AC)));
+      addInfo(STR_TV, getObjectAry(rootObj.getJSONArray(STR_TV)));
+      addInfo(STR_ALARM, getObjectAry(rootObj.getJSONArray(STR_ALARM)));
+      addInfo(STR_TOPSET, getObjectAry(rootObj.getJSONArray(STR_TOPSET)));
+      addInfo(STR_HEATER, getObjectAry(rootObj.getJSONArray(STR_HEATER)));
+      addInfo(STR_DVD, getObjectAry(rootObj.getJSONArray(STR_DVD)));
+      
+      mAdapter.notifyDataSetChanged();
+      
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+  }
+  
+  private Object[] getObjectAry(JSONArray jsonAry) throws JSONException {
+    ArrayList<String> arr = new ArrayList<String>();
+    for (int i=0; i<jsonAry.length(); i++) {
+      arr.add(jsonAry.getString(i));
+    }
+    return arr.toArray();
   }
 }

@@ -15,9 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class AlarmScreen extends BaseScreen {
-
   private String deviceId;
-  private static boolean bFortify = false;
+
+  public static boolean bFortify = false;
   
   public ImageView btnFortify;
   
