@@ -142,6 +142,6 @@ public class ClientEngine implements AppHandler {
     int pid = android.os.Process.myPid();
     android.os.Process.killProcess(pid);
     
-    System.exit(0);
+    System.exit(1);
   }
 }
