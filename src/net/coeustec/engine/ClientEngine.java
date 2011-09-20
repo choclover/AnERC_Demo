@@ -1,14 +1,6 @@
 package net.coeustec.engine;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import net.coeustec.app.MainApp;
-import net.coeustec.app.ResourceManager;
-
 import net.coeustec.app.MessageHandler;
 import net.coeustec.app.io.IoHandler;
 import net.coeustec.engine.request.LoginRequest;
@@ -16,15 +8,9 @@ import net.coeustec.engine.request.Request;
 import net.coeustec.model.exception.STDException;
 import net.coeustec.util.Utils;
 import net.coeustec.util.logger.Logger;
-
 import android.app.ActivityManager;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.telephony.TelephonyManager;
 
@@ -128,8 +114,8 @@ public class ClientEngine implements AppHandler {
   }
   
   public String getErcSN() {
-    String sn = "434954D31107";
-    sn = "434954D31109";  //simulated HOMEBOX 3
+    String sn = "434954D31107";  //Real HOMEBOX 1
+//    sn = "434954D31109";  //simulated HOMEBOX 3
     return sn;
   }
 
