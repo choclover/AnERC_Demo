@@ -6,6 +6,10 @@ public class Utils {
     return (phoneNum != null && phoneNum.length() == 11);
   }
 
+  public static boolean isEmptyString(String str) {
+    return (str!=null && str.trim().length()>0);
+  }
+  
   public static final int byteArrayToInt(byte[] b) {
     return (b[0] << 24) + ((b[1] & 0xFF) << 16) + ((b[2] & 0xFF) << 8)
         + (b[3] & 0xFF);

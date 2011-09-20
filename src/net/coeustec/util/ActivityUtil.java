@@ -1,7 +1,9 @@
 ﻿package net.coeustec.util;
 
+import net.coeustec.util.logger.Logger;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.ActivityManager.RunningAppProcessInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,11 +17,13 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 public class ActivityUtil {
-
-  public static final String PREFS_NAME = "net.coeustec";
+  /*
+   * Constants
+   */
+  private static final String TAG = "@@ ActivityUtil";
+  private static final String PREFS_NAME = "net.coeustec";
 
   private ActivityUtil() {
-
   }
 
   /*
@@ -46,16 +50,12 @@ public class ActivityUtil {
   }
 
   /*
-   * 保存key value对到preference中 key： key参数 value：key值
+   * 保存key:value对到preference中 key： key参数 value：key值
    */
   public static void savePreference(Context activity, String key, String value) {
-
     SharedPreferences settings = activity.getSharedPreferences(PREFS_NAME, 0);
-
     SharedPreferences.Editor editor = settings.edit();
-
     editor.putString(key, value);
-
     editor.commit();
   }
 
@@ -63,11 +63,8 @@ public class ActivityUtil {
    * 取得保存好的数据 key: key值 value：如果不存在时的默认值
    */
   public static String getPreference(Context activity, String key, String value) {
-
     SharedPreferences settings = activity.getSharedPreferences(PREFS_NAME, 0);
-
     String res = settings.getString(key, value);
-
     return res;
   }
 
@@ -82,59 +79,50 @@ public class ActivityUtil {
   // 获取AndroidManifest.xml中android:versionName
   public static String getSoftwareVersion(Context context) {
     String packageName = PREFS_NAME;
-    String sv = "";
+    String result = "";
     try {
       PackageInfo pkinfo = context.getPackageManager().getPackageInfo(
           packageName, PackageManager.GET_CONFIGURATIONS);
-      sv = pkinfo.versionName;
-      return sv;
+      result = pkinfo.versionName;
     } catch (NameNotFoundException e) {
-
+      Logger.w(TAG, e.toString());
     }
-    return "";
+    return result;
   }
 
   // 获取AndroidManifest.xml中android:versionCode
   public static int getVersionCode(Context context) {
     String packageName = PREFS_NAME;
-    int sv = 0;
+    int result = 0;
     try {
       PackageInfo pkinfo = context.getPackageManager().getPackageInfo(
           packageName, PackageManager.GET_CONFIGURATIONS);
-      sv = pkinfo.versionCode;
-      return sv;
+      result = pkinfo.versionCode;
     } catch (NameNotFoundException e) {
-
+      Logger.w(TAG, e.toString());
     }
 
-    return 0;
+    return result;
   }
 
   // 启动新Intent,带参数
-  public static void directToIntent(Context context, Class classname,
+  public static void directToIntent(Context context, Class<?> classname,
       String param) {
     Intent intent = new Intent(context, classname);
-    intent.putExtra("param", param);
+    if (Utils.isEmptyString(param) == false) {
+      intent.putExtra("param", param);
+    }
     context.startActivity(intent);
   }
 
   // 启动新Intent,不带参数
-  public static void directToIntent(Context context, Class classname) {
-    Intent intent = new Intent(context, classname);
-    context.startActivity(intent);
+  public static void directToIntent(Context context, Class<?> classname) {
+    directToIntent(context, classname, null);
   }
 
-  public static void directToExit(Context context, Class classname, String param) {
-    Intent intent = new Intent(context, classname);
-    context.startActivity(intent);
+  public static void directToFinish(Context context, Class<?> classname, String param) {
+    directToIntent(context, classname, param);
     ((Activity) context).finish();
-  }
-
-  public static void exitApp(Context context) {
-    ActivityManager activityManager = (ActivityManager) context
-        .getSystemService("activity");
-    String str = context.getPackageName();
-    activityManager.restartPackage(str);
   }
 
   public static View inflate(Activity context, int layoutId) {
@@ -150,4 +138,38 @@ public class ActivityUtil {
     localToast.show();
   }
 
+  //////////////////////////////////////////////////////////////////////////////
+  public static void exitApp() {
+    int pid = android.os.Process.myPid();
+    android.os.Process.killProcess(pid);
+    System.exit(1);
+  }
+  
+  public static void killProcess(Context context, RunningAppProcessInfo p) {
+    ActivityManager activityManager = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
+    killProcess(activityManager, p);
+  }
+  
+  public static boolean killProcess(ActivityManager activityManager, RunningAppProcessInfo p) {
+    if (activityManager==null || p==null) {
+      Logger.w(TAG, "ActivityManager or ProcessInfo should NOT be NULL!");
+    }
+    int apiVer = android.os.Build.VERSION.SDK_INT;
+    String[] pkgs = p.pkgList;
+    for (String pkg : pkgs) {
+      if (apiVer <= android.os.Build.VERSION_CODES.ECLAIR_MR1) {
+        //for API 2.1 and earlier version
+        activityManager.restartPackage(pkg);
+      } else if (apiVer >= android.os.Build.VERSION_CODES.FROYO) {
+        //for API 2.2 and higher version
+        activityManager.killBackgroundProcesses(pkg);
+      } else {
+        android.os.Process.killProcess(p.pid);
+        //android.os.Process.killProcess(android.os.Process.myPid());
+      }
+    }
+
+    return true;
+  }
+  
 }
