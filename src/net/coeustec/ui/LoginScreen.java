@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -71,6 +72,15 @@ public class LoginScreen extends BaseScreen {
           // TODO Auto-generated catch block
           e.printStackTrace();
         }
+      }
+    });
+    
+    
+    ImageView btnSetting = (ImageView)findViewById(R.id.setting);
+    btnSetting.setOnClickListener(new View.OnClickListener() {
+      public void onClick(View view) {
+        Logger.i("btnSetting is clicked!");
+        ActivityUtil.directToIntent(LoginScreen.this, SettingScreen.class);
       }
     });
   }
@@ -144,10 +154,9 @@ public class LoginScreen extends BaseScreen {
             "错误代码" + response.getErrcode());
       } else {
         ScreenManager.removeTopActivity();
-
+        this.finish();
+        
         ActivityUtil.directToIntent(LoginScreen.this, DeviceListScreen.class);
-
-        finish();
       }
     }
   }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="mainapp_name">AnERC_Demo</string>
+    <string name="mainapp_name">iAtHome</string>
     <string name="launcher_name">Launcher</string>
     <string name="login_title">i@HOME 智能家居</string>
     <string name="title_myhome">我的家居</string>
@@ -8,6 +8,8 @@
     <string name="login_pwd">登录密码</string>
     <string name="login">登    录</string>
     <string name="control">遥控</string>
+    <string name="confirm">确   定</string>
+    <string name="cancel">取   消</string>
     <string name="refreshing">刷新中...</string>
     <string name="security">安防</string>
     <string name="airconditioner">空调</string>

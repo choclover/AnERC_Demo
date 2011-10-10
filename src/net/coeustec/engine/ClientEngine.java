@@ -18,6 +18,9 @@ public class ClientEngine implements AppHandler {
   
   private static final String TAG = "ClientEngine";
   
+  private static String ERC_SN = "434954D31107";  //Real HOMEBOX 1
+  //sn = "434954D31109";  //simulated HOMEBOX 3
+  
   /* 
    * Field Members
    */
@@ -113,12 +116,14 @@ public class ClientEngine implements AppHandler {
     }
   }
   
-  public String getErcSN() {
-    String sn = "434954D31107";  //Real HOMEBOX 1
-//    sn = "434954D31109";  //simulated HOMEBOX 3
-    return sn;
+  public static String getErcSN() {
+    return ERC_SN;
   }
-
+  
+  public static void setErcSN(String ercsn) {
+    ERC_SN = ercsn;
+  }
+  
   public String getIMSI() {
     return "359426002899056";
   }
@@ -138,6 +143,7 @@ public class ClientEngine implements AppHandler {
   
   public void exitApp() {
     ((MainApp)launcher).saveSettings();
+    ((MainApp)launcher).finish();
     
     int pid = android.os.Process.myPid();
     android.os.Process.killProcess(pid);

@@ -4,6 +4,7 @@ import net.coeustec.engine.ClientEngine;
 import net.coeustec.model.exception.STDException;
 import net.coeustec.ui.AirConditionerScreen;
 import net.coeustec.ui.AlarmScreen;
+import net.coeustec.ui.BulbScreen;
 import net.coeustec.ui.LoginScreen;
 import net.coeustec.ui.TvScreen;
 import net.coeustec.ui.WelcomeScreen;
@@ -34,7 +35,7 @@ public class MainApp extends Activity {
     Logger.i("ready to launch welcome screen!");
     ActivityUtil.directToIntent(this, WelcomeScreen.class);
     
-    finish();
+    //finish();
   }
   
   public void saveSettings() {
@@ -45,6 +46,7 @@ public class MainApp extends Activity {
     edit.putInt("ac_temp", AirConditionerScreen.ac_temp);
     
     edit.putBoolean("alarm_fortify", AlarmScreen.bFortify);
+    edit.putBoolean("bulb_lighton", BulbScreen.bBulbOn);
     
     edit.putBoolean("tv_poweron", TvScreen.bPoweron);
     edit.putBoolean("tv_mute", TvScreen.bMute);
@@ -66,6 +68,9 @@ public class MainApp extends Activity {
         AlarmScreen.bFortify = settings.getBoolean("alarm_fortify",
             AlarmScreen.bFortify);
 
+        BulbScreen.bBulbOn = settings.getBoolean("bulb_lighton",
+            BulbScreen.bBulbOn);
+        
         TvScreen.bPoweron = settings
             .getBoolean("tv_poweron", TvScreen.bPoweron);
         TvScreen.bMute = settings.getBoolean("tv_mute", TvScreen.bMute);

@@ -51,8 +51,10 @@ public class DeviceListScreen extends BaseScreen {
   private final static String STR_AC = "空调";
   private final static String STR_TV = "电视机";
   private final static String STR_ALARM = "报警器";
+  private final static String STR_BULB = "电灯";
   private final static String STR_TOPSET = "机顶盒";
   private final static String STR_HEATER = "热水器";
+  private final static String STR_THERTER = "家庭影院";
   private final static String STR_DVD = "DVD";
   
   protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +73,9 @@ public class DeviceListScreen extends BaseScreen {
     addInfo(STR_ALARM, new String[] { /*"安防1", "安防2"*/ });
     addInfo(STR_TOPSET, new String[]{});  
     addInfo(STR_HEATER, new String[]{});  
+    addInfo(STR_THERTER, new String[]{});
     addInfo(STR_DVD, new String[]{});  
-    
+    addInfo(STR_BULB, new String[]{});
     
     mAdapter = new SimpleExpandableListAdapter(
         this,
@@ -100,23 +103,29 @@ public class DeviceListScreen extends BaseScreen {
         Logger.w("[Child Click]:" + groupPos + ":" + childPos + ":" + arg4 + ":" + arg1);
         
         Intent i = null;
-        switch (groupPos) {
-        case 0: {//空调
+        switch (groupPos+1) {
+        case 1: {//空调
           i = new Intent(DeviceListScreen.this, AirConditionerScreen.class);
           break;
         }
         
-        case 1: {//电视机
+        case 2: {//电视机
           i = new Intent(DeviceListScreen.this, TvScreen.class);
           break;
         }
-        case 2: {  //报警器
+        case 3: {  //报警器
           i = new Intent(DeviceListScreen.this, AlarmScreen.class);
           break;
         }
 
-        default:
+        case 8: {  //灯泡
+          i = new Intent(DeviceListScreen.this, BulbScreen.class);
           break;
+        }
+        
+        default:
+          return true;
+//          break;
         }
             
         String value = (String)childAry.get(groupPos).get(childPos).get("TITLE");
@@ -224,6 +233,8 @@ public class DeviceListScreen extends BaseScreen {
       ArrayList<String> arr4 = new ArrayList<String>();
       ArrayList<String> arr5 = new ArrayList<String>();
       ArrayList<String> arr6 = new ArrayList<String>();
+      ArrayList<String> arr7 = new ArrayList<String>();
+      ArrayList<String> arr8 = new ArrayList<String>();
       
       XmlNodeList devList = xmlRoot.selectSingleNode("devicelist")
                             .selectChildNodes("device");
@@ -250,9 +261,14 @@ public class DeviceListScreen extends BaseScreen {
           arr5.add(deviceId+"_"+deviceName);
           break;
         case 6:
-        case 7:
           arr6.add(deviceId+"_"+deviceName);
-          break;          
+        case 7:
+          arr7.add(deviceId+"_"+deviceName);
+          break;    
+        case 8:    
+          arr8.add(deviceId+"_"+deviceName);
+          break;
+          
         default:
           break;
         }
@@ -261,9 +277,13 @@ public class DeviceListScreen extends BaseScreen {
       addInfo(STR_AC, arr1.toArray());
       addInfo(STR_TV, arr2.toArray());
       addInfo(STR_ALARM,arr3.toArray());
+      
       addInfo(STR_TOPSET,arr4.toArray());
       addInfo(STR_HEATER, arr5.toArray());
-      addInfo(STR_DVD, arr6.toArray());
+      addInfo(STR_THERTER, arr6.toArray());      
+      addInfo(STR_DVD, arr7.toArray());
+      
+      addInfo(STR_BULB,arr8.toArray());
       
       mAdapter.notifyDataSetChanged();
       
@@ -273,9 +293,13 @@ public class DeviceListScreen extends BaseScreen {
         rootObj.put(STR_AC, new JSONArray(arr1));
         rootObj.put(STR_TV, new JSONArray(arr2));
         rootObj.put(STR_ALARM, new JSONArray(arr3));
+        
         rootObj.put(STR_TOPSET, new JSONArray(arr4));
         rootObj.put(STR_HEATER, new JSONArray(arr5));
-        rootObj.put(STR_DVD, new JSONArray(arr6));
+        rootObj.put(STR_THERTER, new JSONArray(arr6));
+        rootObj.put(STR_DVD, new JSONArray(arr7));
+        
+        rootObj.put(STR_BULB, new JSONArray(arr8));
         
         String listStr = rootObj.toString();
         Logger.i( "Device List is: "+listStr);
@@ -360,10 +384,14 @@ public class DeviceListScreen extends BaseScreen {
       addInfo(STR_AC, getObjectAry(rootObj.getJSONArray(STR_AC)));
       addInfo(STR_TV, getObjectAry(rootObj.getJSONArray(STR_TV)));
       addInfo(STR_ALARM, getObjectAry(rootObj.getJSONArray(STR_ALARM)));
+      
       addInfo(STR_TOPSET, getObjectAry(rootObj.getJSONArray(STR_TOPSET)));
       addInfo(STR_HEATER, getObjectAry(rootObj.getJSONArray(STR_HEATER)));
-      addInfo(STR_DVD, getObjectAry(rootObj.getJSONArray(STR_DVD)));
+      addInfo(STR_THERTER, getObjectAry(rootObj.getJSONArray(STR_THERTER)));
       
+      addInfo(STR_DVD, getObjectAry(rootObj.getJSONArray(STR_DVD)));
+      addInfo(STR_BULB, getObjectAry(rootObj.getJSONArray(STR_BULB)));
+
       mAdapter.notifyDataSetChanged();
       
     } catch (JSONException e) {

@@ -12,8 +12,10 @@
    
     <activity android:name=".ui.WelcomeScreen"></activity>
     <activity android:name=".ui.LoginScreen"></activity>
+    <activity android:name=".ui.SettingScreen"></activity>
     <activity android:name=".ui.DeviceListScreen"></activity>
     <activity android:name=".ui.AlarmScreen" android:launchMode="singleInstance"></activity>
+    <activity android:name=".ui.BulbScreen" android:launchMode="singleInstance"></activity>
     <activity android:name=".ui.AirConditionerScreen" android:launchMode="singleInstance"></activity>
     <activity android:name=".ui.TvScreen" android:launchMode="singleInstance"></activity>
     
