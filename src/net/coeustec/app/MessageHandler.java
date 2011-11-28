@@ -74,7 +74,6 @@ public class MessageHandler extends android.os.Handler implements AppHandler {
       }
       break;
       
-    case Event.SIGNAL_TYPE_OUTSTREAM_READY:  
     default:
       break;
       

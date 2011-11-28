@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:weightSum="1" android:orientation="vertical"
+	android:background="@drawable/background">
+	<RelativeLayout android:layout_height="40dp"
+		android:layout_width="match_parent" android:background="@drawable/login_title"
+		android:id="@+id/relativeLayout4">
+		<ImageView android:id="@+id/imageView1"
+			android:layout_height="wrap_content" android:layout_width="wrap_content"
+			android:src="@drawable/myhome_default"
+			android:layout_alignParentLeft="true" android:layout_alignParentTop="true"></ImageView>
+		<TextView android:layout_width="wrap_content" android:id="@+id/title"
+			android:text="@string/title_myhome" android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_centerVertical="true" android:layout_toRightOf="@+id/imageView1"
+			android:layout_marginLeft="15dp"></TextView>
+	</RelativeLayout>
+	<RelativeLayout android:layout_height="53dp"
+		android:layout_width="match_parent" android:id="@+id/relativeLayout3"
+		android:layout_weight="0.19">
+		<TextView android:layout_width="wrap_content" android:id="@+id/bulb_status"
+			android:text="@string/refreshing" android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:textColor="@color/black" android:layout_centerVertical="true"
+			android:layout_alignParentRight="true" android:layout_marginRight="53dp"></TextView>
+		<ImageView android:id="@+id/imageView2"
+			android:layout_height="wrap_content" android:layout_width="wrap_content"
+			android:layout_centerVertical="true" android:layout_alignParentLeft="true"
+			android:layout_marginLeft="58dp" android:src="@drawable/alarm"></ImageView>
+	</RelativeLayout>
+
+	<View android:layout_width="wrap_content" android:id="@+id/view1"
+		android:layout_height="3px" android:background="@color/grey"></View>
+
+	<RelativeLayout android:layout_width="match_parent"
+		android:id="@+id/relativeLayout1" android:layout_height="258dp">
+		<ImageView android:src="@drawable/bulb_on"
+			android:layout_width="wrap_content" android:clickable="true"
+			android:focusable="false" android:id="@+id/btnAlarm"
+			android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true"
+			android:layout_centerHorizontal="true" android:layout_marginBottom="27dp"></ImageView>
+	</RelativeLayout>
+	<RelativeLayout android:layout_height="wrap_content"
+		android:layout_width="match_parent" android:id="@+id/RelativeLayout01"
+		android:layout_weight="0.09">
+	</RelativeLayout>
+
+	<RelativeLayout android:layout_height="wrap_content"
+		android:layout_width="match_parent" android:id="@+id/seekbarLayout"
+		android:layout_weight="0.09">
+	</RelativeLayout>
+
+</LinearLayout>
+      
+      

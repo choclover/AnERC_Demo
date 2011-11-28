@@ -49,8 +49,8 @@ public class LoginScreen extends BaseScreen {
     addToManager(this);
 
     EditText phoneNum = ((EditText) findViewById(R.id.etPhonenum));
-    phoneNum.setText("15365185895");
-    phoneNum.setText("15365185894");
+//    phoneNum.setText("15365185895");
+//    phoneNum.setText("15365185894");
     
     Button btnLogin = (Button) findViewById(R.id.btnLogin);
     btnLogin.setOnClickListener(new View.OnClickListener() {
